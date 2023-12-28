@@ -11,15 +11,18 @@ datasource db {
 }
 
 model users {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String?   @db.String
-  email      String    @unique
-  image      String?
-  user_id    String?
-  created_at DateTime  @default(now()) @db.Timestamp
-  updated_at DateTime  @default(now()) @db.Timestamp
-  deleted    Boolean   @default(false)
-  deleted_at DateTime? @db.Timestamp
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?   @db.String
+  email             String    @unique
+  image             String?
+  user_id           String?
+  created_at        DateTime  @default(now()) @db.Timestamp
+  updated_at        DateTime  @default(now()) @db.Timestamp
+  deleted           Boolean   @default(false)
+  deleted_at        DateTime? @db.Timestamp
+  provider          String    @default("credentials")
+  password          String?
+  password_hash_key String?
 
   Organizations organizations[]
   OrgUsers      orgUsers[]
@@ -135,4 +138,21 @@ model rolePermissions {
 
   @@unique([role_id, permission_id])
   @@map("role_permissions")
+}
+
+model register {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?   @db.String
+  email             String    @unique
+  user_id           String?
+  password          String
+  password_hash_key String
+  email_verified    Boolean   @default(false)
+  created_at        DateTime  @default(now()) @db.Timestamp
+  updated_at        DateTime  @default(now()) @db.Timestamp
+  deleted           Boolean   @default(false)
+  deleted_at        DateTime? @db.Timestamp
+
+  @@unique([email, deleted_at])
+  @@map("register")
 }

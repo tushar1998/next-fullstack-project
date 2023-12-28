@@ -13,6 +13,7 @@ import { usePage } from "./context/page-ctx";
 import Conditional from "../server/conditional";
 import { Modal } from "./common/modal";
 import { Trash, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface MemberActionsProps extends Row<TOrganizationUsers> {}
 
@@ -27,8 +28,9 @@ function MemberActions({ original }: MemberActionsProps) {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: (variables: string) => removeUser(variables),
-    onSuccess: () => {},
-    // toast({ variant: "success", title: "Member removed successfully" }),
+    onSuccess: () => {
+      toast.success("Member removed successfully");
+    },
     onSettled() {
       invalidateQueries(["organization-users"]);
       close();

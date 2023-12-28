@@ -21,6 +21,7 @@ import { useServerSession } from "./context/session-ctx";
 import { usePage } from "./context/page-ctx";
 import Conditional from "../server/conditional";
 import { Plus } from "lucide-react";
+import { toast } from "sonner";
 
 interface AddMemberForm {
   email: string;
@@ -66,16 +67,12 @@ export default function OrganizationMemberAdd() {
     onSuccess: () => {
       close();
       reset();
-      // toast({
-      //   variant: "success",
-      //   title: "Invitation sent successfully",
-      // });
+      toast.success("Invitation sent successfully");
     },
-    onError: () => {},
-    // toast({
-    //   variant: "error",
-    //   title: "Invitation send failed",
-    // }),
+    onError: () => {
+      toast.error("Invitation send failed");
+    },
+
     onSettled: close,
   });
 
@@ -141,7 +138,12 @@ export default function OrganizationMemberAdd() {
           // onClose={close}
         >
           <Form {...methods}>
-            <form onSubmit={handleSubmit(onSubmit, onError)} noValidate id="add-member">
+            <form
+              onSubmit={handleSubmit(onSubmit, onError)}
+              noValidate
+              id="add-member"
+              className="space-y-4"
+            >
               <FormInput
                 name="email"
                 label="Email"

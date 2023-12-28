@@ -5,6 +5,7 @@ import {
   permissions,
   Prisma,
   PrismaClient,
+  register,
   rolePermissions,
   roles,
   users,
@@ -96,10 +97,12 @@ interface TRolePermissions extends rolePermissions {
 interface TRole extends roles {}
 interface TUser extends users {}
 type TInvite = invites & { user?: users; org?: organizations };
+type TRegister = register;
 
 export type {
   TOrganizationUser as TOrganizationUsers,
   organizations as TOrganization,
+  TRegister,
   TRole,
   TUser,
   TInvite,

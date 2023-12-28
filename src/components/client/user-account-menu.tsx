@@ -14,6 +14,7 @@ import Conditional from "../server/conditional";
 import { LifeBuoy, Loader2, LogOut, UserCircle2 } from "lucide-react";
 import { useServerSession } from "./context/session-ctx";
 import { ThemeToggle } from "./theme-toggle";
+import { toast } from "sonner";
 
 export default function UserAccountMenu() {
   // const { toast } = useToast();
@@ -25,7 +26,7 @@ export default function UserAccountMenu() {
   const { mutate, isLoading } = useMutation({
     mutationFn: () => signOut(),
     onSuccess: () => {
-      // toast({ variant: "success", title: "Logged out successfully" });
+      toast.success("Logged out successfully");
       toggle();
     },
     onSettled: () => close(),

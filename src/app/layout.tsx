@@ -9,16 +9,19 @@ import QueryProvider from "@/components/client/query-provider";
 import Toaster from "@/components/ui/toast";
 import TailwindIndicator from "@/components/server/tailwind-indicator";
 
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Untitled UI",
     template: `%s - Untitled UI`,
   },
   description: "Simple Management app using nextjs app",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
   icons: {
     icon: "/favicon.ico",
   },

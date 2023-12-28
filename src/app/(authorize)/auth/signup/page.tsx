@@ -6,10 +6,14 @@ import { getProviders } from "next-auth/react";
 import { PageProps } from "@/types/page";
 import AuthButton from "@/components/client/auth-button";
 import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import GoogleLogo from "@/assets/svgs/google-logo";
+import SignUpForm from "@/components/client/sign-up-form";
+import { Separator } from "@/components/ui/separator";
 
 export default async function SignUp({ searchParams }: PageProps) {
   const providers = await getProviders();
   const session = await getServerSession(nextAuthOptions);
+
 
   const isAuthenticated: boolean = Boolean(session?.user);
 
@@ -24,25 +28,22 @@ export default async function SignUp({ searchParams }: PageProps) {
   const signUpNewUser: boolean = isAuthenticated && searchParams?.new === "true";
 
   return (
-    <>
-      <h1 className="text-2xl">{grettings()}</h1>
-      <p className="mb-4 text-xs">Let&#39;s create your account</p>
-
-      <div className="mb-2">
-        {providers &&
-          Object.keys(providers).map((provider) => {
-            return (
-              <AuthButton
-                key={provider}
-                provider={providers[provider]}
-                authButtonType={signUpNewUser ? "signup" : "signupUser"}
-                className="w-full"
-              >
-                Sign Up with {providers[provider].name}
-              </AuthButton>
-            );
-          })}
-      </div>
+    <main className="flex flex-col gap-4">
+      <span>
+        <h1 className="text-2xl">{grettings()}</h1>
+        <p className="text-xs text-muted-foreground">Let&#39;s create your account</p>
+      </span>
+      <SignUpForm />
+      <Separator />
+      <AuthButton
+        provider={providers?.google}
+        authButtonType={signUpNewUser ? "signup" : "signupUser"}
+        className="w-full"
+        variant="outline"
+      >
+        <GoogleLogo />
+        Sign Up with {providers?.google.name}
+      </AuthButton>
 
       {searchParams?.new === "true" && (
         <p className="text-xs text-red-500 dark:text-red-600">
@@ -54,7 +55,7 @@ export default async function SignUp({ searchParams }: PageProps) {
         <p className="text-xs text-red-500 dark:text-red-600">{searchParams?.error}</p>
       )}
 
-      <p className="mt-4 text-center text-xs">
+      <p className="text-center text-xs">
         Already have an account?
         <Link
           href="/auth/signin?checkAuth=false"
@@ -63,6 +64,6 @@ export default async function SignUp({ searchParams }: PageProps) {
           Sign in
         </Link>
       </p>
-    </>
+    </main>
   );
 }

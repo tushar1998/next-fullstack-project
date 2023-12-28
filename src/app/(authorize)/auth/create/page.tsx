@@ -11,6 +11,7 @@ export default async function CreateUserPage() {
   const logger = new Logger(CreateUserPage.name);
   const session = await getServerSession(nextAuthOptions);
 
+
   const user_id = session?.user?.user_id;
 
   // User not authenticated
@@ -46,15 +47,15 @@ export default async function CreateUserPage() {
       return;
     }
 
-    return (
-      userCreate && (
+    if (userCreate) {
+      return (
         <div>
           <h2 className="mb-4 text-xl">Create Organization</h2>
 
           <CreateOrgForm userCreate={userCreate} />
         </div>
-      )
-    );
+      );
+    }
   } catch (error) {
     logger.error("Prisma: Error creating user redirecting", JSON.stringify(error, null, 2));
 

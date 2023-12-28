@@ -21,7 +21,6 @@ interface ButtonVisibleStates {
 
 export default function SiteNavigation({ navs }: SiteNavigationProps) {
   const { org, ...rest } = useServerSession();
-  console.log({ org,rest });
 
   const [buttonsVisible, setButtonsVisible] = useDebouncedState<ButtonVisibleStates>(
     {

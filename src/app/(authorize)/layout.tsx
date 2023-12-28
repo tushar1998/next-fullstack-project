@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 import { ThemeToggle } from "@/components/client/theme-toggle";
 import { Hexagon } from "lucide-react";
 
-export default function AuthLayout({ children }: PropsWithChildren) {
+export default function AuthLayout({ children, ...props }: PropsWithChildren) {
   return (
     <div className="flex-1">
       <div className="min-h-screen md:flex">

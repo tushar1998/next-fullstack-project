@@ -1,53 +1,51 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useRouter } from "next/navigation"
-import { acceptInvitation, declineInvitation } from "@/actions/invite"
-import { useMutation } from "@tanstack/react-query"
+import React from "react";
+import { useRouter } from "next/navigation";
+import { acceptInvitation, declineInvitation } from "@/actions/invite";
+import { useMutation } from "@tanstack/react-query";
 
-import { TInvite } from "@/lib/prisma"
+import { TInvite } from "@/lib/prisma";
 
-import { Button } from "../ui/button"
-// import { useToast } from "../ui/use-toast"
+import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 interface InvitationButtonsProps {
-  invitation: TInvite
+  invitation: TInvite;
 }
 
-export default function InvitationButtons({
-  invitation,
-}: InvitationButtonsProps) {
-  // const { toast } = useToast()
-  const router = useRouter()
+export default function InvitationButtons({ invitation }: InvitationButtonsProps) {
+  const router = useRouter();
+
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: TInvite) => acceptInvitation(data),
-    onSuccess: () => {
-      // toast({ variant: "success", title: "Invitation accepted!" })
-      router.push("/")
+    onSuccess: (data) => {
+      toast.success("Invitation accepted!");
+
+      const searchParams = new URLSearchParams();
+      searchParams.append("user_id", data.user_id);
+
+      router.push(`/auth/invite/create?${searchParams.toString()}`);
     },
     onError: () => {
-      // toast({ variant: "error", title: "Invitation accept failed!" })
+      toast.error("Invitation accept failed!");
     },
-  })
+  });
 
   const { mutate: mutateDecline, isLoading: isLoadingDecline } = useMutation({
     mutationFn: (id: string) => declineInvitation(id),
     onSuccess: () => {
-      // toast({ variant: "success", title: "Invitation declined!" })
-      router.push("/")
+      toast.success("Invitation declined!");
+      router.push("/");
     },
     onError: () => {
-      // toast({ variant: "error", title: "Invitation decline failed!" })
+      toast.error("Invitation declined failed!");
     },
-  })
+  });
 
   return (
     <>
-      <Button
-        className="w-full"
-        loading={isLoading}
-        onClick={() => mutate(invitation)}
-      >
+      <Button className="w-full" loading={isLoading} onClick={() => mutate(invitation)}>
         Accept Invitation
       </Button>
       <Button
@@ -59,5 +57,5 @@ export default function InvitationButtons({
         Decline
       </Button>
     </>
-  )
+  );
 }

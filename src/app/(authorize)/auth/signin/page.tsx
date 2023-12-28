@@ -1,44 +1,49 @@
-import React from "react"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
-import { getProviders } from "next-auth/react"
+import React from "react";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { getProviders } from "next-auth/react";
 
-import { Logger } from "@/lib/logger"
-import AuthButton from "@/components/client/auth-button"
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route"
+import { Logger } from "@/lib/logger";
+import AuthButton from "@/components/client/auth-button";
+import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import SignInWithCredentials from "@/components/client/sign-in-form";
+import GoogleLogo from "@/assets/svgs/google-logo";
+import { Separator } from "@/components/ui/separator";
+import { PageProps } from "@/types/page";
 
-export default async function SignIn() {
-  const logger = new Logger(SignIn.name)
-  const providers = await getProviders()
+export default async function SignIn({ searchParams }: PageProps) {
+  const logger = new Logger(SignIn.name);
+  const providers = await getProviders();
 
-  const session = await getServerSession(nextAuthOptions)
+  const session = await getServerSession(nextAuthOptions);
 
   if (session) {
-    logger.log("server session.user.id found redirecting to dashboard")
+    logger.log("server session.user.id found redirecting to dashboard");
 
-    redirect("/dashboard")
+    redirect("/dashboard");
   }
 
   return (
-    <>
-      <h1 className="text-2xl">Welcome back,</h1>
-      <p className="mb-4 text-xs">Please sign in to continue.</p>
-      {providers &&
-        Object.keys(providers).map((provider) => {
-          return (
-            <AuthButton
-              key={provider}
-              provider={providers[provider]}
-              authButtonType="signin"
-              className="w-full"
-            >
-              Sign In with {providers[provider].name}
-            </AuthButton>
-          )
-        })}
+    <main className="flex flex-col gap-4">
+      <span>
+        <h1 className="text-2xl">Welcome back,</h1>
+        <p className="text-xs text-muted-foreground">Please sign in to continue.</p>
+        {searchParams?.error ? <p className="text-destructive">Email id or password incorrect</p> : null}
+      </span>
+      <SignInWithCredentials />
+      <Separator />
+      <AuthButton
+        provider={providers?.google}
+        authButtonType="signin"
+        className="w-full gap-4"
+        variant="outline"
+      >
+        <GoogleLogo />
+        Sign In with {providers?.google.name}
+      </AuthButton>
 
-      <p className="mt-4 text-center text-xs">
+      <p className="text-center text-xs">
         Don&#39;t have an account?
         <Link
           href="/auth/signup"
@@ -47,6 +52,6 @@ export default async function SignIn() {
           Create an account
         </Link>
       </p>
-    </>
-  )
+    </main>
+  );
 }

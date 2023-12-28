@@ -35,7 +35,6 @@ export default function CreateOrgForm({ userCreate }: CreateOrgFormProps) {
   const { mutate, isLoading } = useMutation({
     mutationFn: (variables: CreateOrgParams) => createOrg(variables),
     onSuccess: async (data) => {
-      console.log("success createOrg",{ data });
       await update({ org: data?.org, role: data?.role });
       push("/dashboard");
     },

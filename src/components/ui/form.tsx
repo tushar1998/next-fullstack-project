@@ -30,6 +30,7 @@ interface FormInputProps<
   message?: boolean;
   className?: string;
   options?: SelectOptions[];
+  withAsterisk?: boolean;
 
   // RestProps
   labelProps?: LabelProps;
@@ -37,88 +38,96 @@ interface FormInputProps<
   messageProps?: React.HTMLAttributes<HTMLParagraphElement>;
 }
 
-const FormInput = React.forwardRef(
-  <
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-  >(
-    { className, children, ...props }: FormInputProps<TFieldValues, TName>,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => {
-    const {
-      name,
-      control,
-      rules,
-      shouldUnregister,
-      label,
-      labelProps,
-      description,
-      descriptionProps,
-      message = true,
-      messageProps,
-      ...restProps
-    } = props;
+const FormInput = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+  className,
+  children,
+  withAsterisk,
+  ...props
+}: FormInputProps<TFieldValues, TName>) => {
+  const {
+    name,
+    control,
+    rules,
+    shouldUnregister,
+    label,
+    labelProps,
+    description,
+    descriptionProps,
+    message = true,
+    messageProps,
+    ...restProps
+  } = props;
 
-    const id = React.useId();
-    const { field, formState } = useController({
-      name,
-      control,
-      rules,
-      shouldUnregister,
-    });
-    const { getFieldState } = useFormContext();
+  const id = React.useId();
+  const { field, formState } = useController({
+    name,
+    control,
+    rules,
+    shouldUnregister,
+  });
+  const { getFieldState } = useFormContext();
 
-    const { error } = getFieldState(name, formState);
+  const { error } = getFieldState(name, formState);
 
-    const formLabelId = `${id}-form-label`;
-    const formDescriptionId = `${id}-form-item-description`;
-    const formMessageId = `${id}-form-item-message`;
+  const formLabelId = `${id}-form-label`;
+  const formDescriptionId = `${id}-form-item-description`;
+  const formMessageId = `${id}-form-item-message`;
 
-    const body = error ? String(error?.message) : null;
+  const body = error ? String(error?.message) : null;
 
-    return (
-      <div ref={ref} className={cn("mb-4 space-y-1", className)} id={id} {...restProps}>
-        <Label
-          className={cn("ml-0.5", error && "text-destructive", labelProps?.className)}
-          htmlFor={formLabelId}
-          {...labelProps}
-        >
-          {label}
-        </Label>
-
-        <Slot
-          id={formLabelId}
-          aria-describedby={
-            !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
-          }
-          aria-invalid={!!error}
-          {...field}
-        >
-          {children}
-        </Slot>
-
-        <Conditional satisfies={description && !body}>
-          <p
-            id={formDescriptionId}
-            className={cn("text-xs text-muted-foreground", descriptionProps?.className)}
-            {...descriptionProps}
-          >
-            {description}
-          </p>
-          <Conditional satisfies={message && body}>
-            <p
-              id={formMessageId}
-              className={cn("text-xs font-medium text-destructive", messageProps?.className)}
-              {...messageProps}
-            >
-              {body}
-            </p>
-          </Conditional>
+  return (
+    <div className={cn("", className)} id={id} {...restProps}>
+      <Label
+        className={cn(
+          "ml-0.5 flex gap-[1px] items-center mb-1",
+          error && "text-destructive",
+          labelProps?.className
+        )}
+        htmlFor={formLabelId}
+        {...labelProps}
+      >
+        <p>{label}</p>
+        <Conditional satisfies={withAsterisk}>
+          <span className="text-destructive">*</span>
         </Conditional>
-      </div>
-    );
-  }
-);
+      </Label>
+
+      <Slot
+        id={formLabelId}
+        aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
+        aria-invalid={!!error}
+        {...field}
+      >
+        {children}
+      </Slot>
+
+      <Conditional satisfies={description && !body}>
+        <p
+          id={formDescriptionId}
+          className={cn("ml-0.5 text-xs text-muted-foreground mt-0.5", descriptionProps?.className)}
+          {...descriptionProps}
+        >
+          {description}
+        </p>
+        <Conditional satisfies={message && body}>
+          <p
+            id={formMessageId}
+            className={cn(
+              "ml-0.5 text-xs font-medium text-destructive mt-0.5",
+              messageProps?.className
+            )}
+            {...messageProps}
+          >
+            {body}
+          </p>
+        </Conditional>
+      </Conditional>
+    </div>
+  );
+};
 
 FormInput.displayName = "FormInput";
 
