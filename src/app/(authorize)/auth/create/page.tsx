@@ -4,7 +4,7 @@ import { Session, getServerSession } from "next-auth";
 
 import { Logger } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import { nextAuthOptions } from "@/lib/next-auth";
 import CreateOrgForm from "@/components/client/create-org";
 
 export default async function CreateUserPage() {

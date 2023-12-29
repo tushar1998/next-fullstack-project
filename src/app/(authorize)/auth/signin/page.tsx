@@ -6,7 +6,7 @@ import { getProviders } from "next-auth/react";
 
 import { Logger } from "@/lib/logger";
 import AuthButton from "@/components/client/auth-button";
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import { nextAuthOptions } from "@/lib/next-auth";
 import SignInWithCredentials from "@/components/client/sign-in-form";
 import GoogleLogo from "@/assets/svgs/google-logo";
 import { Separator } from "@/components/ui/separator";

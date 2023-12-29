@@ -13,7 +13,7 @@ import getQueryClient from "@/lib/getQueryClient";
 // import OrganizationTeam from "@/components/client/org-team";
 // import OrganizationTeamBreadCrumb from "@/components/client/org-team-breadcrumb"
 import { PageProvider } from "@/components/client/context/page-ctx";
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import { nextAuthOptions } from "@/lib/next-auth";
 import OrganizationMemberAdd from "@/components/client/org-member-add";
 import OrganizationTeam from "@/components/client/org-team";
 

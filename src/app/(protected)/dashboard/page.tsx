@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route"
+import { nextAuthOptions } from "@/lib/next-auth";
 
 export default async function Dashboard() {
   const session = await getServerSession(nextAuthOptions)

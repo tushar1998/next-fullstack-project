@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 // import { Routes } from "@/lib/constants/routes";
 import { prisma } from "@/lib/prisma";
 import { buttonVariants } from "@/components/ui/button";
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import { nextAuthOptions } from "@/lib/next-auth";
 
 // import CommandK from "./client/command-k";
 // import NavItem from "./client/nav-item"

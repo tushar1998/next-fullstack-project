@@ -5,7 +5,7 @@ import { PageProps } from "@/types/page"
 import { siteConfig } from "@/config/site"
 import { prisma } from "@/lib/prisma"
 import { buttonVariants } from "@/components/ui/button"
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route"
+import { nextAuthOptions } from "@/lib/next-auth";
 
 export default async function OrganizationPage({ params }: PageProps) {
   const session = await getServerSession(nextAuthOptions)

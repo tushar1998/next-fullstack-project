@@ -8,7 +8,7 @@ import { SessionStoreProvider } from "@/components/client/context/session-ctx";
 // import SiteFooter from "@/components/client/site-footer";
 import SiteHeader from "@/components/client/site-header";
 
-import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
+import { nextAuthOptions } from "@/lib/next-auth";
 
 export default async function DashboardLayout({ children }: PropsWithChildren) {
   const logger = new Logger("Dashboard");

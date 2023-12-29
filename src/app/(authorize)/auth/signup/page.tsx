@@ -5,7 +5,7 @@ import { getProviders } from "next-auth/react";
 
 import { PageProps } from "@/types/page";
 import AuthButton from "@/components/client/auth-button";
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import { nextAuthOptions } from "@/lib/next-auth";
 import GoogleLogo from "@/assets/svgs/google-logo";
 import SignUpForm from "@/components/client/sign-up-form";
 import { Separator } from "@/components/ui/separator";
