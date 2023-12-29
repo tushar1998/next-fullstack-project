@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run app:build",
+    "app:build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "prisma:generate": "prisma generate",
     "db:push": "dotenv -e .env.local -- npx prisma db push"
   },
   "dependencies": {
