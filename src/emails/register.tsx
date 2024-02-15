@@ -3,6 +3,7 @@ import * as React from "react";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Layout from "./components/layout";
+import { makeEmailUrl } from "@/lib/utils";
 
 interface RegisterEmailProps {
   email?: string;
@@ -11,6 +12,8 @@ interface RegisterEmailProps {
 }
 
 export default function Register({ email, name, href }: RegisterEmailProps) {
+  const url = makeEmailUrl(href);
+
   return (
     <Layout>
       <Header />
@@ -29,10 +32,7 @@ export default function Register({ email, name, href }: RegisterEmailProps) {
           there&#39;s anything you need, we&#39;ll be here every step of the way.
         </Text>
 
-        <Button
-          className="rounded-md bg-black px-4 py-2.5 text-sm text-white"
-          href={href ?? "https://google.com"}
-        >
+        <Button className="rounded-md bg-black px-4 py-2.5 text-sm text-white" href={url}>
           Verify Email
         </Button>
 

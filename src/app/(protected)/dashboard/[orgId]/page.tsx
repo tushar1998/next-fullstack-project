@@ -18,8 +18,6 @@ export default async function OrganizationPage({ params }: PageProps) {
     throw new Error(`Organization name '${params?.orgId}' does not exists`);
   }
 
-  console.log("log from registration email", process.env.NEXT_PUBLIC_VERCEL_URL);
-
   return (
     <section className="mx-auto grid w-full items-center gap-4 p-4 sm:px-8">
       <div className="flex max-w-[980px] flex-col items-start gap-2">

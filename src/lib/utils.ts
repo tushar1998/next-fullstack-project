@@ -16,3 +16,17 @@ export const encodeString = (text: string) => {
 
   return { hashedPassword, salt };
 };
+
+export const makeEmailUrl = (href?: string) => {
+  const appUrl = process.env.NEXT_APP_URL;
+
+  if (!appUrl) {
+    return href;
+  }
+
+  if (!href) {
+    return "";
+  }
+
+  return appUrl.concat(href);
+};
