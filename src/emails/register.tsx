@@ -11,26 +11,22 @@ interface RegisterEmailProps {
 }
 
 export default function Register({ email, name, href }: RegisterEmailProps) {
-  console.log("log from registration email", process.env.VERCEL_URL);
   return (
     <Layout>
       <Header />
       {/* Main Content */}
       <Section className="px-6 py-8">
+        <Text className="m-0 pb-4 text-base text-slate-500">Hi {name ?? "John Doe"},</Text>
+
         <Text className="m-0 pb-4 text-base text-slate-500">
-          Hi {name ?? "John Doe"},
+          We&#39;re excited to welcome you to Untitled and we&#39;re even more excited about what
+          we&#39;ve got planned. You&#39;re already on your way to creating beautiful visual
+          products.
         </Text>
 
         <Text className="m-0 pb-4 text-base text-slate-500">
-          We&#39;re excited to welcome you to Untitled and we&#39;re even more
-          excited about what we&#39;ve got planned. You&#39;re already on your
-          way to creating beautiful visual products.
-        </Text>
-
-        <Text className="m-0 pb-4 text-base text-slate-500">
-          Whether you&#39;re here for your brand, for a cause, or just for fun —
-          welcome! If there&#39;s anything you need, we&#39;ll be here every
-          step of the way.
+          Whether you&#39;re here for your brand, for a cause, or just for fun — welcome! If
+          there&#39;s anything you need, we&#39;ll be here every step of the way.
         </Text>
 
         <Button
