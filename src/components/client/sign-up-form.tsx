@@ -35,12 +35,17 @@ function SignUpForm() {
 
   const { mutate } = useMutation({
     mutationFn: async (variables: Record<"email" | "password", string>) => registerUser(variables),
-    onSuccess: ({ email }) => {
+    onSuccess: (data) => {
       const searchParams = new URLSearchParams();
 
-      searchParams.set("email", email);
-      router.push(`/auth/register?${searchParams?.toString()}`);
+      if ("email" in data) {
+        searchParams.set("email", data?.email);
+        router.push(`/auth/register?${searchParams?.toString()}`);
+      } else {
+        toast.error("Failed to send registration email!");
+      }
     },
+    onError: () => toast.error("Failed to Register!"),
   });
 
   const onSubmit: SubmitHandler<SignUpFormSchema> = (values) => {

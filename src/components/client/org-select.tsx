@@ -62,7 +62,7 @@ export default function OrganizationSelect({ orgUsers, className }: Organization
         >
           <div className="truncate leading-none">
             <span title={orgDisplayName} className="text-left">
-              {orgDisplayName} jnjksdncjkskjcsd
+              {orgDisplayName}
             </span>
             <p className="truncate text-left text-xs text-muted-foreground" title={orgDisplayName}>
               {orgDisplayName ? paramOrg?.value : ""}

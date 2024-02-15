@@ -1,16 +1,14 @@
 "use server";
 
-import { resend } from "@/lib/email";
+import { sendEmail } from "@/lib/email";
 import { Logger } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { encodeString } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
+import { render } from "@react-email/render";
 import Register from "../emails/register";
 
-export const registerUser = async ({
-  email,
-  password,
-}: Record<"email" | "password", string>) => {
+export const registerUser = async ({ email, password }: Record<"email" | "password", string>) => {
   const logger = new Logger("Register New User");
 
   try {
@@ -30,18 +28,19 @@ export const registerUser = async ({
     });
 
     //? Send Email to the user with verify link /auth/verify?registration=response?.id
-    const mailResponse = await resend.emails.send({
-      from: "onboarding@resend.dev",
+    await sendEmail({
       to: email,
       subject: "Register to Untitled UI",
-      react: Register({
-        email: email,
-        href: `/auth/verify?registration=${response?.id}`,
-        name: name,
-      }),
+      html: render(
+        Register({
+          email: email,
+          href: `/auth/verify?registration=${response?.id}`,
+          name: name,
+        })
+      ),
     });
 
-    console.log("reponse ---------->", mailResponse);
+    //? Add activity log
 
     return response;
   } catch (error) {

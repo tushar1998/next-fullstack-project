@@ -1,16 +1,17 @@
-import { createTransport } from "nodemailer";
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { createTransport, SendMailOptions } from "nodemailer";
 
 const transporter = createTransport({
-  host: "smtp.forwardemail.net",
+  host: "smtp.resend.com",
   port: 465,
   secure: true,
   auth: {
-    user: "my_user",
-    pass: "my_password",
+    user: "resend",
+    pass: process.env.RESEND_API_KEY,
   },
 });
 
-export { transporter, resend };
+const sendEmail = ({ ...opts }: Omit<SendMailOptions, "from">) => {
+  return transporter.sendMail({ from: process.env.RESEND_FROM_EMAIL, ...opts });
+};
+
+export { transporter, sendEmail };
