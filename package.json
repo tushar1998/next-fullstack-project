@@ -3,14 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "npm run app:build",
     "app:build": "prisma generate && next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prisma:generate": "prisma generate",
+    "build": "npm run app:build",
+    "check-types": "tsc --noEmit --pretty",
     "db:push": "dotenv -e .env.local -- npx prisma db push",
-    "dev:email": "email dev --port 3001 --dir ./src/emails"
+    "dev": "next dev",
+    "dev:email": "email dev --port 3001 --dir ./src/emails",
+    "lint": "next lint",
+    "prepare": "husky",
+    "prisma:generate": "prisma generate",
+    "start": "next start"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -59,6 +66,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.5",
     "@types/nodemailer": "^6.4.14",
@@ -66,7 +75,22 @@
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-next": "14.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^27.8.0",
+    "eslint-plugin-jest-dom": "^5.1.0",
+    "eslint-plugin-jest-formatting": "^3.1.0",
+    "eslint-plugin-playwright": "^1.1.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "eslint-plugin-tailwindcss": "^3.14.2",
+    "eslint-plugin-testing-library": "^6.2.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3"
