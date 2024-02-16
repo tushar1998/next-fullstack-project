@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth"
 
 import { prisma } from "@/lib/prisma"
 import { nextAuthOptions } from "@/lib/next-auth";
+import { Routes } from "@/lib/constants/routes";
 
 export default async function Dashboard() {
   const session = await getServerSession(nextAuthOptions)
@@ -23,7 +24,7 @@ export default async function Dashboard() {
   })
 
   if (org || orgUser) {
-    return redirect(`/dashboard/${org?.name ?? orgUser?.org?.name}`)
+    return redirect(`/${org?.name ?? orgUser?.org?.name}${Routes.HOME}`)
   }
   return redirect("/auth/signup")
 }

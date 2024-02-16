@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   description: "Simple Management app using nextjs app",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
   },
 };
 

@@ -11,14 +11,14 @@ import { Button } from "@/components/ui/button";
 import { DropDown, DropDownProps } from "@/components/ui/dropdown-menu";
 
 import Conditional from "../server/conditional";
-import { LifeBuoy, Loader2, LogOut, UserCircle2 } from "lucide-react";
+import { LifeBuoy, Loader2, LogOut, Settings } from "lucide-react";
 import { useServerSession } from "./context/session-ctx";
 import { ThemeToggle } from "./theme-toggle";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function UserAccountMenu() {
-  // const { toast } = useToast();
-
+  const router = useRouter();
   const [opened, { toggle }] = useDisclosure();
 
   const { role, user } = useServerSession();
@@ -51,10 +51,11 @@ export default function UserAccountMenu() {
           id: "account",
           menuTitle: (
             <>
-              <UserCircle2 className="mr-2 h-4 w-4" />
-              <span>My Account</span>
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
             </>
           ),
+          onClick: () => router.push("/settings"),
         },
       ],
       [

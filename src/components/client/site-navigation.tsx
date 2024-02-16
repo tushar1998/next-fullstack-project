@@ -3,8 +3,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDebouncedState, useEventListener, useWindowEvent } from "@mantine/hooks";
 
-import { Routes } from "@/lib/constants/routes";
-
 import NavItem, { NavItemProps } from "../client/nav-item";
 import { Button } from "../ui/button";
 import { useServerSession } from "./context/session-ctx";
@@ -20,8 +18,6 @@ interface ButtonVisibleStates {
 }
 
 export default function SiteNavigation({ navs }: SiteNavigationProps) {
-  const { org, ...rest } = useServerSession();
-
   const [buttonsVisible, setButtonsVisible] = useDebouncedState<ButtonVisibleStates>(
     {
       isAtStart: true,
@@ -112,7 +108,6 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
         className="scrollbar-none flex items-center justify-between gap-1 overflow-scroll scroll-smooth px-2"
         ref={ref}
       >
-        <NavItem href={`${Routes.DASHBOARD}/${org?.name}`} id={org?.name ?? ""} title="Home" />
         {navs.map(({ ...nav }) => (
           <NavItem key={nav.id} {...nav} />
         ))}

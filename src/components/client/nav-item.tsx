@@ -1,26 +1,26 @@
-"use client"
+"use client";
 
-import React, { useMemo } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import React, { useMemo } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-import { buttonVariants } from "../ui/button"
+import { buttonVariants } from "../ui/button";
 
 export interface NavItemProps {
-  href: string
-  id: string
-  title: string
+  href: string;
+  id: string;
+  title: string;
 }
 
 export default function NavItem({ href, id, title }: NavItemProps) {
-  const path = usePathname()
+  const path = usePathname();
 
   const pathName = useMemo(() => {
-    const pathArr = path.split("/")
-    return pathArr[pathArr.length - 1]
-  }, [path])
+    const pathArr = path.split("/");
+    return pathArr[pathArr.length - 1];
+  }, [path]);
 
   return (
     <Link
@@ -34,5 +34,5 @@ export default function NavItem({ href, id, title }: NavItemProps) {
     >
       <p>{title}</p>
     </Link>
-  )
+  );
 }

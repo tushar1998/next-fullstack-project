@@ -4,6 +4,8 @@ export const siteConfig = {
   name: "Untitled UI",
   description: "Beautifully designed components built with Radix UI and Tailwind CSS.",
   mainNav: [
+    { id: "home", title: "Home", href: "/home" },
+    { id: "dashboard", title: "Dashboard", href: "/dashboard" },
     { id: "teams", title: "Teams", href: "/teams" },
     // { id: "events", title: "Events", href: "/events" },
   ],
