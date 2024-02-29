@@ -13,7 +13,7 @@
     "prepare": "husky",
     "prisma:generate": "prisma generate",
     "start": "next start",
-    "commit": "git-cz"
+    "commit": "cz"
   },
   "config": {
     "commitizen": {
