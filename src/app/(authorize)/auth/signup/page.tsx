@@ -1,19 +1,18 @@
-import React from "react";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { getProviders } from "next-auth/react";
+import React from "react";
 
-import { PageProps } from "@/types/page";
-import AuthButton from "@/components/client/auth-button";
-import { nextAuthOptions } from "@/lib/next-auth";
 import GoogleLogo from "@/assets/svgs/google-logo";
+import AuthButton from "@/components/client/auth-button";
 import SignUpForm from "@/components/client/sign-up-form";
 import { Separator } from "@/components/ui/separator";
+import { nextAuthOptions } from "@/lib/next-auth";
+import type { PageProps } from "@/types/page";
 
 export default async function SignUp({ searchParams }: PageProps) {
   const providers = await getProviders();
   const session = await getServerSession(nextAuthOptions);
-
 
   const isAuthenticated: boolean = Boolean(session?.user);
 

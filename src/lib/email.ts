@@ -1,4 +1,5 @@
-import { createTransport, SendMailOptions } from "nodemailer";
+import type { SendMailOptions } from "nodemailer";
+import { createTransport } from "nodemailer";
 
 const transporter = createTransport({
   host: "smtp.resend.com",
@@ -14,4 +15,4 @@ const sendEmail = ({ ...opts }: Omit<SendMailOptions, "from">) => {
   return transporter.sendMail({ from: process.env.RESEND_FROM_EMAIL, ...opts });
 };
 
-export { transporter, sendEmail };
+export { sendEmail, transporter };

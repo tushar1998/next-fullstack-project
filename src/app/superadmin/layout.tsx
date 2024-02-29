@@ -1,8 +1,9 @@
-import React, { PropsWithChildren } from "react";
+import { Hexagon } from "lucide-react";
 import Link from "next/link";
+import type { PropsWithChildren } from "react";
+import React from "react";
 
 import { siteConfig } from "@/config/site";
-import { Hexagon } from "lucide-react";
 
 export default function SuperAdminLayout({ children }: PropsWithChildren) {
   return (
@@ -10,7 +11,7 @@ export default function SuperAdminLayout({ children }: PropsWithChildren) {
       <header className="sticky top-0 z-40 w-full border-b bg-background">
         <div className="mx-auto flex h-16 w-full items-center px-2 sm:px-8">
           <Link href="/" className="flex items-center space-x-2">
-            <Hexagon className="h-6 w-6" />
+            <Hexagon className="size-6" />
             <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
           </Link>
           <div className="m-2 h-5 border" />

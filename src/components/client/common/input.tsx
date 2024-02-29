@@ -1,10 +1,12 @@
 "use client";
 
-import Conditional from "@/components/server/conditional";
-import { Input as Comp, InputProps as CompProps } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
+import type { ClipboardEventHandler, ForwardedRef } from "react";
+import React, { forwardRef, useState } from "react";
 
-import React, { ClipboardEventHandler, ForwardedRef, forwardRef, useMemo, useState } from "react";
+import Conditional from "@/components/server/conditional";
+import type { InputProps as CompProps } from "@/components/ui/input";
+import { Input as Comp } from "@/components/ui/input";
 
 interface InputProps extends CompProps {
   withShowPassword?: boolean;
@@ -34,11 +36,11 @@ export const Input = forwardRef(
         <Conditional satisfies={withShowPassword}>
           <Conditional satisfies={inputType === "password"}>
             <Eye
-              className="absolute right-3 top-3 h-4 w-4 text-muted-foreground"
+              className="absolute right-3 top-3 size-4 text-muted-foreground"
               onClick={() => setType("text")}
             />
             <EyeOff
-              className="absolute right-3 top-3 h-4 w-4 text-muted-foreground"
+              className="absolute right-3 top-3 size-4 text-muted-foreground"
               onClick={() => setType("password")}
             />
           </Conditional>

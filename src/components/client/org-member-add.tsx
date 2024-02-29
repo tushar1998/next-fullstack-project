@@ -1,27 +1,29 @@
 "use client";
 
+import { useDisclosure } from "@mantine/hooks";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
 import React from "react";
-import { addMember, AddMemberParams } from "@/actions/add-member";
+import type { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import type { AddMemberParams } from "@/actions/add-member";
+import { addMember } from "@/actions/add-member";
 import { findOrgUserWithEmail } from "@/actions/find-org-users";
 import { getInvite } from "@/actions/get-invite";
 import { find } from "@/actions/roles";
-import { useDisclosure } from "@mantine/hooks";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
-
-import { TRole } from "@/lib/prisma";
-import { SelectInput } from "@/components/ui/select";
 import { Modal } from "@/components/client/common/modal";
+import { SelectInput } from "@/components/ui/select";
+import type { TRole } from "@/lib/prisma";
 
+import Conditional from "../server/conditional";
 import { Button } from "../ui/button";
 import { Form, FormInput } from "../ui/form";
 import { Input } from "../ui/input";
+import { usePage } from "./context/page-ctx";
 // import { useToast } from "../ui/use-toast";
 import { useServerSession } from "./context/session-ctx";
-import { usePage } from "./context/page-ctx";
-import Conditional from "../server/conditional";
-import { Plus } from "lucide-react";
-import { toast } from "sonner";
 
 interface AddMemberForm {
   email: string;
@@ -34,7 +36,6 @@ export default function OrganizationMemberAdd() {
   const { permissions } = usePage();
 
   const [opened, { close, toggle }] = useDisclosure(false);
-  // const { toast } = useToast();
 
   const { data: roles, isLoading: rolesLoading } = useQuery(["roles"], () => find(), {
     enabled: !!role,
@@ -46,11 +47,13 @@ export default function OrganizationMemberAdd() {
       }, {});
 
       if (role) {
-        return role?.perform_action_on?.map((role) => ({
-          label: rolesByName[role]?.display_name,
-          value: rolesByName[role]?.id,
+        return role?.perform_action_on?.map((userRole) => ({
+          label: rolesByName[userRole]?.display_name,
+          value: rolesByName[userRole]?.id,
         }));
       }
+
+      return undefined;
     },
   });
 
@@ -78,7 +81,8 @@ export default function OrganizationMemberAdd() {
 
   const onSubmit: SubmitHandler<AddMemberForm> = (values) => {
     if (!org?.id || !user.id) {
-      console.error("Org Id or User not found");
+      //! Find a way to debug logs in console
+      // console.error("Org Id or User not found");
       return;
     }
 
@@ -90,8 +94,9 @@ export default function OrganizationMemberAdd() {
     });
   };
 
-  const onError: SubmitErrorHandler<AddMemberForm> = (errors) => {
-    console.error("Error in Form", errors);
+  const onError: SubmitErrorHandler<AddMemberForm> = () => {
+    //! Find a way to debug logs in console
+    // console.error("Error in Form", errors);
   };
 
   const validateEmail = async (value: string) => {
@@ -109,6 +114,8 @@ export default function OrganizationMemberAdd() {
     if (orgUser) {
       return "User already exists in organization";
     }
+
+    return false;
   };
 
   return (
@@ -127,7 +134,7 @@ export default function OrganizationMemberAdd() {
             loading={rolesLoading || !role}
             onClick={toggle}
           >
-            <Plus className="h-4 w-4 text-current" />
+            <Plus className="size-4 text-current" />
             Add Member
           </Button>
         </Modal.Button>

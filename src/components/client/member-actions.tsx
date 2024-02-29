@@ -1,19 +1,19 @@
 "use client";
 
-import React from "react";
-import { removeUser } from "@/actions/org-user";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Row } from "@tanstack/react-table";
-
-import { TOrganizationUsers } from "@/lib/prisma";
-
-import { Button } from "../ui/button";
-import { usePage } from "./context/page-ctx";
-import Conditional from "../server/conditional";
-import { Modal } from "./common/modal";
-import { Trash, Trash2 } from "lucide-react";
+import type { Row } from "@tanstack/react-table";
+import { Trash2 } from "lucide-react";
+import React from "react";
 import { toast } from "sonner";
+
+import { removeUser } from "@/actions/org-user";
+import type { TOrganizationUsers } from "@/lib/prisma";
+
+import Conditional from "../server/conditional";
+import { Button } from "../ui/button";
+import { Modal } from "./common/modal";
+import { usePage } from "./context/page-ctx";
 
 interface MemberActionsProps extends Row<TOrganizationUsers> {}
 
@@ -44,12 +44,12 @@ function MemberActions({ original }: MemberActionsProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 p-0"
+            className="size-8 p-0"
             loading={isLoading}
             onClick={toggle}
           >
             <span className="sr-only">Remove Member</span>
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="size-4" />
           </Button>
         </Modal.Button>
 

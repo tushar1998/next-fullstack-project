@@ -1,13 +1,11 @@
-"use server"
+"use server";
 
-import { Logger } from "@/lib/logger"
-import { prisma, TRolePermissions } from "@/lib/prisma"
+import { Logger } from "@/lib/logger";
+import type { TRolePermissions } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
-export const find = async (
-  role_id: string,
-  name?: Array<string>
-): Promise<TRolePermissions[]> => {
-  const logger = new Logger("ServerActions:Find:Permissions")
+export const find = async (role_id: string, name?: Array<string>): Promise<TRolePermissions[]> => {
+  const logger = new Logger("ServerActions:Find:Permissions");
 
   try {
     const permissions = await prisma.rolePermissions.findMany({
@@ -20,50 +18,46 @@ export const find = async (
       include: {
         permissions: true,
       },
-    })
+    });
 
-    return permissions
+    return permissions;
   } catch (error) {
-    logger.error("Failed to fetch permission", JSON.stringify(error, null, 2))
+    logger.error("Failed to fetch permission", JSON.stringify(error, null, 2));
 
-    throw error
+    throw error;
   }
-}
+};
 
 export const findPermissions = async () => {
-  const logger = new Logger("ServerActions:Find all Permissions")
+  const logger = new Logger("ServerActions:Find all Permissions");
   try {
-    const permissions = await prisma.permissions.findMany()
+    const permissions = await prisma.permissions.findMany();
 
-    return permissions
+    return permissions;
   } catch (error) {
-    logger.log("Failed to fetch permissions", JSON.stringify(error, null, 2))
+    logger.log("Failed to fetch permissions", JSON.stringify(error, null, 2));
 
-    throw error
+    throw error;
   }
-}
+};
 
 export type CreatePermission = {
-  name: string
-  scope: string
-  display_name: string
-}
+  name: string;
+  scope: string;
+  display_name: string;
+};
 
-export const createPermissions = async ({
-  name,
-  scope,
-  display_name,
-}: CreatePermission) => {
-  const logger = new Logger("ServerActions:Create Permissions")
+export const createPermissions = async ({ name, scope, display_name }: CreatePermission) => {
+  const logger = new Logger("ServerActions:Create Permissions");
   try {
     const permissions = await prisma.permissions.create({
       data: { name, display_name, scope },
-    })
+    });
 
-    return permissions
+    return permissions;
   } catch (error) {
-    logger.log("Failed to create permission", JSON.stringify(error, null, 2))
+    logger.log("Failed to create permission", JSON.stringify(error, null, 2));
 
-    throw error
+    throw error;
   }
-}
+};

@@ -1,8 +1,9 @@
-import Conditional from "@/components/server/conditional";
-import { siteConfig } from "@/config/site";
-import { PageProps } from "@/types/page";
 import { Send } from "lucide-react";
 import React from "react";
+
+import Conditional from "@/components/server/conditional";
+import { siteConfig } from "@/config/site";
+import type { PageProps } from "@/types/page";
 
 const Register = ({ searchParams }: PageProps) => {
   //! What if the unknown user comes from direct link - Implement Error cases
@@ -12,7 +13,7 @@ const Register = ({ searchParams }: PageProps) => {
       <Send className="mt-2" />
 
       <Conditional satisfies={searchParams?.email}>
-        <h2 className="text-md w-80 leading-0">
+        <h2 className="w-80">
           Thankyou for registering with {siteConfig?.name}. A verification mail has been sent to
           your email address {searchParams?.email}
         </h2>

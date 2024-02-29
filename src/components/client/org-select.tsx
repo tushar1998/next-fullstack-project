@@ -1,12 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Check, ChevronDown } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useMemo, useState } from "react";
 
-import { SelectOptions } from "@/types/nav";
-import { TOrganization, TRole } from "@/lib/prisma";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -16,7 +14,9 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Check, ChevronDown } from "lucide-react";
+import type { TOrganization, TRole } from "@/lib/prisma";
+import { cn } from "@/lib/utils";
+import type { SelectOptions } from "@/types/nav";
 
 interface OrgSelectOptions extends SelectOptions {
   org: TOrganization;
@@ -45,7 +45,7 @@ export default function OrganizationSelect({ orgUsers, className }: Organization
   }, [paramOrg?.org?.display_name]);
 
   if (!params?.orgId || !paramOrg) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -72,7 +72,7 @@ export default function OrganizationSelect({ orgUsers, className }: Organization
             {/* <Conditional satisfies={!data?.org}>
               <Icons.spinner className="animate-spin" />
             </Conditional> */}
-            <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
+            <ChevronDown className="size-4 shrink-0 opacity-50" />
           </div>
         </Button>
       </PopoverTrigger>

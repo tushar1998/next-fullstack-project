@@ -1,11 +1,11 @@
 export interface NavItem {
-  title: string
-  href?: string
-  disabled?: boolean
-  external?: boolean
+  title: string;
+  href?: string;
+  disabled?: boolean;
+  external?: boolean;
 }
 
 export interface SelectOptions {
-  label: string | null
-  value: string
+  label: string | null;
+  value: string;
 }

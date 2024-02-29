@@ -1,14 +1,16 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { useRouter } from "next/navigation"
-import { ClientSafeProvider, signIn, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation";
+import type { ClientSafeProvider } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import React, { useState } from "react";
 
-import { Button, ButtonProps } from "@/components/ui/button"
+import type { ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 interface AuthButtonProps extends ButtonProps {
-  provider?: ClientSafeProvider
-  authButtonType: "signin" | "signup" | "signout" | "signupUser"
+  provider?: ClientSafeProvider;
+  authButtonType: "signin" | "signup" | "signout" | "signupUser";
 }
 
 export default function AuthButton({
@@ -17,41 +19,39 @@ export default function AuthButton({
   authButtonType: type,
   ...props
 }: AuthButtonProps) {
-  const [isLoading, setLoading] = useState(false)
-  const router = useRouter()
+  const [isLoading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleAuth = () => {
     try {
-      setLoading(true)
+      setLoading(true);
 
       if (type === "signout") {
         signOut({
           redirect: true,
           callbackUrl: `${window.location.origin}/auth/signin`,
-        })
+        });
       }
 
       if (type === "signin") {
-        signIn(provider?.id, { callbackUrl: window.location.origin })
+        signIn(provider?.id, { callbackUrl: window.location.origin });
       }
 
       if (type === "signup") {
-        router.push("/auth/create")
+        router.push("/auth/create");
       }
 
       if (type === "signupUser") {
-        signIn(provider?.id, { callbackUrl: "/auth/create" })
+        signIn(provider?.id, { callbackUrl: "/auth/create" });
       }
     } catch (error) {
-      console.error(error)
-
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Button onClick={handleAuth} loading={isLoading} {...props}>
       {children}
     </Button>
-  )
+  );
 }

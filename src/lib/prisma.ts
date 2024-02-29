@@ -1,15 +1,15 @@
-import {
+import type {
   invites,
   organizations,
   orgUsers,
   permissions,
   Prisma,
-  PrismaClient,
   register,
   rolePermissions,
   roles,
   users,
 } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import merge from "lodash/merge";
 
 const globalForPrisma = globalThis as unknown as {
@@ -100,11 +100,11 @@ type TInvite = invites & { user?: users; org?: organizations };
 type TRegister = register;
 
 export type {
-  TOrganizationUser as TOrganizationUsers,
+  TInvite,
   organizations as TOrganization,
+  TOrganizationUser as TOrganizationUsers,
   TRegister,
   TRole,
-  TUser,
-  TInvite,
   TRolePermissions,
+  TUser,
 };

@@ -1,18 +1,18 @@
-import React from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { getProviders } from "next-auth/react";
+import React from "react";
 
-import { Logger } from "@/lib/logger";
-import AuthButton from "@/components/client/auth-button";
-import { nextAuthOptions } from "@/lib/next-auth";
-import SignInWithCredentials from "@/components/client/sign-in-form";
 import GoogleLogo from "@/assets/svgs/google-logo";
+import AuthButton from "@/components/client/auth-button";
+import SignInWithCredentials from "@/components/client/sign-in-form";
 import { Separator } from "@/components/ui/separator";
-import { PageProps } from "@/types/page";
+import { Logger } from "@/lib/logger";
+import { nextAuthOptions } from "@/lib/next-auth";
+import type { PageProps } from "@/types/page";
 
-export default async function SignIn({ searchParams }: PageProps) {
+export default async function SignIn({ searchParams }: Readonly<PageProps>) {
   const logger = new Logger(SignIn.name);
   const providers = await getProviders();
 
@@ -29,7 +29,9 @@ export default async function SignIn({ searchParams }: PageProps) {
       <span>
         <h1 className="text-2xl">Welcome back,</h1>
         <p className="text-xs text-muted-foreground">Please sign in to continue.</p>
-        {searchParams?.error ? <p className="text-destructive">Email id or password incorrect</p> : null}
+        {searchParams?.error ? (
+          <p className="text-destructive">Email id or password incorrect</p>
+        ) : null}
       </span>
       <SignInWithCredentials />
       <Separator />

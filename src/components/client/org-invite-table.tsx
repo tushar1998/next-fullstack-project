@@ -1,19 +1,21 @@
+/* eslint-disable react/no-unstable-nested-components */
+
 "use client";
 
-import React, { useMemo } from "react";
-import { getInvites } from "@/actions/invite";
 import { useQuery } from "@tanstack/react-query";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { isAfter } from "date-fns";
+import React, { useMemo } from "react";
 
-import { TInvite } from "@/lib/prisma";
+import { getInvites } from "@/actions/invite";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import type { TInvite } from "@/lib/prisma";
 
+import Conditional from "../server/conditional";
 import { Checkbox } from "../ui/checkbox";
 import { ReactTable, ReactTableLoading } from "../ui/table";
-import InviteActions from "./invite-actions";
 import { useServerSession } from "./context/session-ctx";
-import Conditional from "../server/conditional";
+import InviteActions from "./invite-actions";
 
 export default function OrgInviteTable() {
   const { org } = useServerSession();
@@ -50,7 +52,7 @@ export default function OrgInviteTable() {
           return (
             <div className="flex flex-row items-center gap-3">
               <Avatar>
-                <AvatarFallback className="border-[1.5px] border-dashed	border-muted-foreground bg-transparent"></AvatarFallback>
+                <AvatarFallback className="border-[1.5px] border-dashed	border-muted-foreground bg-transparent" />
               </Avatar>
               <div className="flex flex-col">
                 <span className="truncate">{value}</span>

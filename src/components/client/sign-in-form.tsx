@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { FormInput } from "@/components/ui/form";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import React from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
+
+import { FormInput } from "@/components/ui/form";
+
+import { Button } from "../ui/button";
 import { Input } from "./common/input";
 
 interface SignInFormSchema {
@@ -30,19 +33,23 @@ function SignInWithCredentials() {
         <FormInput
           name="email"
           label="Email"
-          rules={{ required: { value: true, message: "Please enter your email" } }}
+          rules={{
+            required: { value: true, message: "Please enter your email" },
+          }}
         >
           <Input placeholder="Enter your email" />
         </FormInput>
         <FormInput
           name="password"
           label="Password"
-          rules={{ required: { value: true, message: "Please enter your password" } }}
+          rules={{
+            required: { value: true, message: "Please enter your password" },
+          }}
         >
           <Input placeholder="Enter your password" type="password" withShowPassword />
         </FormInput>
         <div className="w-full text-right">
-          <Link href="/auth/forgot-password" className="text-sm hover:underline text-current">
+          <Link href="/auth/forgot-password" className="text-sm text-current hover:underline">
             Forgot Password?
           </Link>
         </div>

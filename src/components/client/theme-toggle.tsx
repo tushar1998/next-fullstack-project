@@ -1,12 +1,11 @@
 "use client";
 
-import * as React from "react";
-import { useTheme } from "next-themes";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-
 import { Moon, SunMedium } from "lucide-react";
+import { useTheme } from "next-themes";
+import * as React from "react";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface ThemeToggleProps {
   className?: string;
@@ -22,8 +21,8 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       className={cn(className)}
     >
-      <SunMedium className="h-5 w-5 dark:hidden" />
-      <Moon className="hidden h-5 w-5 dark:block" />
+      <SunMedium className="size-5 dark:hidden" />
+      <Moon className="hidden size-5 dark:block" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );

@@ -1,10 +1,10 @@
-import NextAuth, { NextAuthOptions, User } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialProvider from "next-auth/providers/credentials";
-
-import { prisma } from "@/lib/prisma";
-import { Logger } from "@/lib/logger";
 import { compareSync } from "bcryptjs";
+import type { NextAuthOptions, User } from "next-auth";
+import CredentialProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+
+import { Logger } from "@/lib/logger";
+import { prisma } from "@/lib/prisma";
 
 const logger = new Logger("NextAuth");
 
@@ -12,18 +12,20 @@ export const nextAuthOptions: NextAuthOptions = {
   providers: [
     CredentialProvider({
       async authorize(credentials?: Record<string, string>): Promise<User | null> {
-        //? Find User
-        //? Check if already exists - Frontend check
-        //? Verify providers - google or any other
-        //? Verify Credentials - Passwords
-        //? Generate Token as per sign in with google
-        //? return user
+        // ? Find User
+        // ? Check if already exists - Frontend check
+        // ? Verify providers - google or any other
+        // ? Verify Credentials - Passwords
+        // ? Generate Token as per sign in with google
+        // ? return user
         try {
           if (!credentials) {
             return null;
           }
 
-          const user = await prisma.users.findUnique({ where: { email: credentials?.email } });
+          const user = await prisma.users.findUnique({
+            where: { email: credentials?.email },
+          });
 
           if (!user || !user?.password) return null;
 
@@ -34,7 +36,7 @@ export const nextAuthOptions: NextAuthOptions = {
           let isPasswordCorrect: boolean;
 
           // User registeration and not logged we perform internal login which provides already hashed password
-          const isCredentialPasswordHashed = credentials["hashed"];
+          const isCredentialPasswordHashed = credentials.hashed;
 
           if (isCredentialPasswordHashed) {
             isPasswordCorrect = credentials?.password === user.password;
@@ -54,7 +56,11 @@ export const nextAuthOptions: NextAuthOptions = {
         }
       },
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "johndoe@acme.com" },
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "johndoe@acme.com",
+        },
         password: { label: "Password", type: "password" },
       },
       name: "Credentials",

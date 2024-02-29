@@ -1,12 +1,12 @@
 "use client";
 
-import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronDown, Loader2 } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
+import * as React from "react";
+import type { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
-import { SelectOptions } from "@/types/nav";
-import { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form";
+import type { SelectOptions } from "@/types/nav";
 
 const Select = SelectPrimitive.Root;
 
@@ -28,7 +28,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className="size-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -88,9 +88,9 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="size-4" />
       </SelectPrimitive.ItemIndicator>
     </span>
 
@@ -114,14 +114,14 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 interface SelectInputProps {
   options?: SelectOptions[];
   placeholder?: string;
-  label?: string;
-  loading?: boolean;
+  // label?: string;
+  // loading?: boolean;
 }
 
 const SelectInput = React.forwardRef(
   <
     TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   >(
     {
       name,
@@ -129,7 +129,7 @@ const SelectInput = React.forwardRef(
       onChange,
       options,
       placeholder,
-      loading,
+      // loading,
     }: Partial<ControllerRenderProps<TFieldValues, TName>> & SelectInputProps,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
@@ -155,12 +155,12 @@ const SelectInput = React.forwardRef(
 SelectInput.displayName = "SelectInput";
 export {
   Select,
-  SelectInput,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
   SelectContent,
-  SelectLabel,
+  SelectGroup,
+  SelectInput,
   SelectItem,
+  SelectLabel,
   SelectSeparator,
+  SelectTrigger,
+  SelectValue,
 };

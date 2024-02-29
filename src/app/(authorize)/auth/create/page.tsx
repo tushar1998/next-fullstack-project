@@ -1,21 +1,21 @@
-import React from "react";
 import { redirect } from "next/navigation";
-import { Session, getServerSession } from "next-auth";
+import type { Session } from "next-auth";
+import { getServerSession } from "next-auth";
+import React from "react";
 
-import { Logger } from "@/lib/logger";
-import { prisma } from "@/lib/prisma";
-import { nextAuthOptions } from "@/lib/next-auth";
 import CreateOrgForm from "@/components/client/create-org";
+import { Logger } from "@/lib/logger";
+import { nextAuthOptions } from "@/lib/next-auth";
+import { prisma } from "@/lib/prisma";
 
 export default async function CreateUserPage() {
   const logger = new Logger(CreateUserPage.name);
   const session = await getServerSession(nextAuthOptions);
 
-
-  const user_id = session?.user?.user_id;
+  const userId = session?.user?.user_id;
 
   // User not authenticated
-  if (!user_id) {
+  if (!userId) {
     logger.log("user_id is undefined redirect to signin");
     redirect("/auth/signin");
   }
@@ -31,20 +31,16 @@ export default async function CreateUserPage() {
       logger.log("session?.user?.id null");
 
       redirect(`/auth/signup${params.toString()}`);
-
-      return;
     }
 
-    const org_user = await prisma.orgUsers.findFirst({
+    const orgUser = await prisma.orgUsers.findFirst({
       where: { user_id: session?.user?.id },
     });
 
-    if (org_user) {
+    if (orgUser) {
       logger.info("user has already signed up redirecting to dashboard");
 
       redirect("/dashboard");
-
-      return;
     }
 
     if (userCreate) {

@@ -1,11 +1,12 @@
-import React, { PropsWithChildren } from "react";
-import Image from "next/image";
-
-import { siteConfig } from "@/config/site";
-import { ThemeToggle } from "@/components/client/theme-toggle";
 import { Hexagon } from "lucide-react";
+import Image from "next/image";
+import type { PropsWithChildren } from "react";
+import React from "react";
 
-export default function AuthLayout({ children, ...props }: PropsWithChildren) {
+import { ThemeToggle } from "@/components/client/theme-toggle";
+import { siteConfig } from "@/config/site";
+
+export default function AuthLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <div className="flex-1">
       <div className="min-h-screen md:flex">
@@ -31,7 +32,7 @@ export default function AuthLayout({ children, ...props }: PropsWithChildren) {
             {/* Add Translations Toggle */}
             <ThemeToggle />
           </div>
-          <div className="max-w-9/12 mx-auto w-full min-w-fit sm:w-3/5 md:w-[70%] lg:w-3/5 xl:w-2/4">
+          <div className="mx-auto w-full min-w-fit sm:w-3/5 md:w-[70%] lg:w-3/5 xl:w-2/4">
             {children}
           </div>
 

@@ -1,25 +1,26 @@
 "use client";
 
-import React from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
+import { LifeBuoy, Loader2, LogOut, Settings } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import React from "react";
+import { toast } from "sonner";
 
-import { getShortName } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { DropDown, DropDownProps } from "@/components/ui/dropdown-menu";
+import type { DropDownProps } from "@/components/ui/dropdown-menu";
+import { DropDown } from "@/components/ui/dropdown-menu";
+import { getShortName } from "@/lib/utils";
 
 import Conditional from "../server/conditional";
-import { LifeBuoy, Loader2, LogOut, Settings } from "lucide-react";
 import { useServerSession } from "./context/session-ctx";
 import { ThemeToggle } from "./theme-toggle";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 export default function UserAccountMenu() {
   const router = useRouter();
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle, close }] = useDisclosure();
 
   const { role, user } = useServerSession();
 
@@ -42,7 +43,7 @@ export default function UserAccountMenu() {
             {role.display_name}
           </p>
         </span>
-        <ThemeToggle className="inline-flex h-8 w-8 sm:hidden" />
+        <ThemeToggle className="inline-flex size-8 sm:hidden" />
       </div>
     ),
     items: [
@@ -51,7 +52,7 @@ export default function UserAccountMenu() {
           id: "account",
           menuTitle: (
             <>
-              <Settings className="mr-2 h-4 w-4" />
+              <Settings className="mr-2 size-4" />
               <span>Settings</span>
             </>
           ),
@@ -63,7 +64,7 @@ export default function UserAccountMenu() {
           id: "help",
           menuTitle: (
             <>
-              <LifeBuoy className="mr-2 h-4 w-4" />
+              <LifeBuoy className="mr-2 size-4" />
               <span>Help Center</span>
             </>
           ),
@@ -73,8 +74,8 @@ export default function UserAccountMenu() {
           menuTitle: (
             <>
               <Conditional satisfies={isLoading}>
-                <Loader2 className="mr-2 mt-0.5 h-4 w-4 animate-spin" />
-                <LogOut className="mr-2 mt-0.5 h-4 w-4" />
+                <Loader2 className="mr-2 mt-0.5 size-4 animate-spin" />
+                <LogOut className="mr-2 mt-0.5 size-4" />
               </Conditional>
               <div className="leading-none">
                 <p>Logout</p>
@@ -95,7 +96,7 @@ export default function UserAccountMenu() {
   return (
     <DropDown menu={menu} defaultOpen={false} open={opened} onOpenChange={toggle}>
       <Button
-        className="h-8 w-8 rounded-full focus-visible:ring-1 focus-visible:ring-offset-0 sm:h-10 sm:w-10"
+        className="size-8 rounded-full focus-visible:ring-1 focus-visible:ring-offset-0 sm:size-10"
         variant="outline"
       >
         <Avatar className="mx-auto cursor-pointer">

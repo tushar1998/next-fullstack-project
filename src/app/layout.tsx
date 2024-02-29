@@ -1,13 +1,15 @@
-import type { Metadata } from "next";
 import "../styles/globals.css";
 
+import type { Metadata } from "next";
+import type { PropsWithChildren } from "react";
+
+import AuthProvider from "@/components/client/auth-provider";
+import QueryProvider from "@/components/client/query-provider";
+import ThemeProvider from "@/components/client/theme-provider";
+import TailwindIndicator from "@/components/server/tailwind-indicator";
+import Toaster from "@/components/ui/toast";
 import { fontsGgSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import AuthProvider from "@/components/client/auth-provider";
-import ThemeProvider from "@/components/client/theme-provider";
-import QueryProvider from "@/components/client/query-provider";
-import Toaster from "@/components/ui/toast";
-import TailwindIndicator from "@/components/server/tailwind-indicator";
 
 export const viewport = {
   themeColor: [
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <html lang="en">
       <body

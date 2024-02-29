@@ -1,6 +1,6 @@
+import { genSaltSync, hashSync } from "bcryptjs";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { genSaltSync, hashSync } from "bcryptjs";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

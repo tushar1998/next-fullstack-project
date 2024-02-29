@@ -1,9 +1,11 @@
-import { Text, Section, Button } from "@react-email/components";
+import { Button, Section, Text } from "@react-email/components";
 import * as React from "react";
-import Header from "./components/header";
-import Footer from "./components/footer";
-import Layout from "./components/layout";
+
 import { makeEmailUrl } from "@/lib/utils";
+
+import Footer from "./components/footer";
+import Header from "./components/header";
+import Layout from "./components/layout";
 
 interface RegisterEmailProps {
   email?: string;

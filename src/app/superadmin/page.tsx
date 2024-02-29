@@ -1,21 +1,21 @@
-import React from "react"
-import { findPermissions } from "@/actions/permissions"
-import { findRolePermissions } from "@/actions/role-permissions"
-import { find } from "@/actions/roles"
-import { dehydrate, Hydrate } from "@tanstack/react-query"
+import { dehydrate, Hydrate } from "@tanstack/react-query";
+import React from "react";
 
-import getQueryClient from "@/lib/getQueryClient"
+import { findPermissions } from "@/actions/permissions";
+import { findRolePermissions } from "@/actions/role-permissions";
+import { find } from "@/actions/roles";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+import getQueryClient from "@/lib/getQueryClient";
 
-import PermissionsSuperAdmin from "./permissions"
-import RolePermissionForms from "./role-pers"
-import RolePermissionSuperAdmin from "./rolePermissions"
-import RolesSuperAdmin from "./roles"
+import PermissionsSuperAdmin from "./permissions";
+import RolePermissionForms from "./role-pers";
+import RolePermissionSuperAdmin from "./rolePermissions";
+import RolesSuperAdmin from "./roles";
 
 export default async function SuperAdmin() {
   /**
@@ -24,21 +24,19 @@ export default async function SuperAdmin() {
    * Crud Roles-Permissions
    */
 
-  const queryClient = getQueryClient()
+  const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(["roles"], () => find())
-  await queryClient.prefetchQuery(["permissions"], () => findPermissions())
-  await queryClient.prefetchQuery(["role-permissions"], () =>
-    findRolePermissions()
-  )
+  await queryClient.prefetchQuery(["roles"], () => find());
+  await queryClient.prefetchQuery(["permissions"], () => findPermissions());
+  await queryClient.prefetchQuery(["role-permissions"], () => findRolePermissions());
 
-  const dehydratedState = dehydrate(queryClient)
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <Hydrate state={dehydratedState}>
       <div className="hidden justify-between lg:flex">
         <RolePermissionForms />
-        <div className="border"></div>
+        <div className="border" />
 
         <Accordion type="multiple" className="mx-auto w-full max-w-xl p-4">
           <AccordionItem value="item-1">
@@ -64,5 +62,5 @@ export default async function SuperAdmin() {
       <div className="lg:hidden">Screen not supported on Mobile devices</div>
       {/* <h1 className="text-3xl">Role Permissions</h1> */}
     </Hydrate>
-  )
+  );
 }

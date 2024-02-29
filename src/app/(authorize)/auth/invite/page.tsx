@@ -1,19 +1,21 @@
-import React, { ReactNode } from "react";
 import { isAfter } from "date-fns";
+import { Network, Plus } from "lucide-react";
+import type { ReactNode } from "react";
+import React from "react";
 
-import { PageProps } from "@/types/page";
-import { prisma, TInvite, TUser } from "@/lib/prisma";
-import { getShortName } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import InvitationButtons from "@/components/client/invite-buttons";
 import Conditional from "@/components/server/conditional";
-import { Network, Plus } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { TInvite, TUser } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
+import { getShortName } from "@/lib/utils";
+import type { PageProps } from "@/types/page";
 
-export default async function InvitePage({ searchParams }: PageProps) {
-  const invitation_id = (searchParams?.invitation as string) ?? "";
+export default async function InvitePage({ searchParams }: Readonly<PageProps>) {
+  const invitationId = (searchParams?.invitation as string) ?? "";
 
   const invitation: TInvite | null = await prisma.invites.findUnique({
-    where: { id: invitation_id },
+    where: { id: invitationId },
     include: { user: true, org: true },
   });
 
@@ -49,15 +51,15 @@ export default async function InvitePage({ searchParams }: PageProps) {
         <div className="flex items-center gap-3">
           <Conditional satisfies={invitedUser}>
             <>
-              <Avatar className="h-10 w-10">
+              <Avatar className="size-10">
                 <AvatarImage src={invitedUser?.image as string} alt={invitedUser?.name as string} />
                 <AvatarFallback>{getShortName(invitedUser?.name)}</AvatarFallback>
               </Avatar>
-              <Plus className="h-8 w-8" />
+              <Plus className="size-8" />
             </>
           </Conditional>
 
-          <Network className="h-10 w-10" />
+          <Network className="size-10" />
         </div>
         <h1 className="w-72 text-center text-lg">
           <span className="font-extrabold">{invitation?.user?.name}</span> has

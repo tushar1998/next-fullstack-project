@@ -1,21 +1,18 @@
 "use client";
 
-import React from "react";
-import {
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  Validate,
-  useForm,
-} from "react-hook-form";
-import { FormInput } from "../ui/form";
-import { Input } from "@/components/client/common/input";
-import { Button } from "../ui/button";
-import { findUserByEmail } from "@/actions/org-user";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { registerUser } from "@/actions/auth";
 import { useRouter } from "next/navigation";
+import React from "react";
+import type { SubmitErrorHandler, SubmitHandler, Validate } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import { registerUser } from "@/actions/auth";
+import { findUserByEmail } from "@/actions/org-user";
+import { Input } from "@/components/client/common/input";
+
+import { Button } from "../ui/button";
+import { FormInput } from "../ui/form";
 
 interface SignUpFormSchema {
   email: string;
@@ -52,7 +49,7 @@ function SignUpForm() {
     mutate(values);
   };
 
-  const onError: SubmitErrorHandler<SignUpFormSchema> = (error) => {};
+  const onError: SubmitErrorHandler<SignUpFormSchema> = () => {};
 
   const validateConfirmPassword: Validate<string, SignUpFormSchema> = (
     val: string,
@@ -61,6 +58,8 @@ function SignUpForm() {
     if (val !== formVal.password) {
       return "Password does not match";
     }
+
+    return false;
   };
 
   const validateEmail: Validate<string, SignUpFormSchema> = async (val) => {
@@ -69,6 +68,8 @@ function SignUpForm() {
     if (user) {
       return "User already exists!";
     }
+
+    return false;
   };
 
   return (

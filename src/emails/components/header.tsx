@@ -1,10 +1,9 @@
-import { Column, Img, Row, Section, Text } from "@react-email/components";
-import { Hexagon } from "lucide-react";
+import { Column, Img, Row, Section } from "@react-email/components";
 import React from "react";
 
 const Header = () => {
   return (
-    <Section className="p-6 w-[576px] m-0">
+    <Section className="m-0 w-[576px] p-6">
       <Row>
         <Column>
           <Img

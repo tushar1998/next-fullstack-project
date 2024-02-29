@@ -1,28 +1,24 @@
 "use client";
 
-import React, { ForwardedRef, PropsWithChildren, ReactNode } from "react";
 import { Slot } from "@radix-ui/react-slot";
-import {
-  FieldPath,
-  FieldValues,
-  FormProvider,
-  useController,
-  UseControllerProps,
-  useFormContext,
-} from "react-hook-form";
+import type { ForwardedRef, PropsWithChildren, ReactNode } from "react";
+import React from "react";
+import type { FieldPath, FieldValues, UseControllerProps } from "react-hook-form";
+import { FormProvider, useController, useFormContext } from "react-hook-form";
 
-import { SelectOptions } from "@/types/nav";
+import type { LabelProps } from "@/components/ui/label";
+import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Label, LabelProps } from "@/components/ui/label";
+import type { SelectOptions } from "@/types/nav";
 
-import { Checkbox } from "./checkbox";
 import Conditional from "../server/conditional";
+import { Checkbox } from "./checkbox";
 
 const Form = FormProvider;
 
 interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends UseControllerProps<TFieldValues, TName>,
     PropsWithChildren {
   label: ReactNode;
@@ -40,7 +36,7 @@ interface FormInputProps<
 
 const FormInput = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   className,
   children,
@@ -134,7 +130,7 @@ FormInput.displayName = "FormInput";
 const ToggleInput = React.forwardRef(
   <
     TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   >(
     { className, children, ...props }: FormInputProps<TFieldValues, TName>,
     ref: ForwardedRef<HTMLDivElement>
@@ -185,7 +181,7 @@ const ToggleInput = React.forwardRef(
           aria-invalid={!!error}
           aria-checked={field.value}
           {...field}
-          //@ts-ignore - //! Find Solution why checked and onCheckedChange does not exists on Slot
+          // @ts-ignore - //! Find Solution why checked and onCheckedChange does not exists on Slot
           checked={field.value}
           onCheckedChange={field.onChange}
         >
@@ -230,7 +226,7 @@ ToggleInput.displayName = ToggleInput.name;
 const CheckboxGroup = React.forwardRef(
   <
     TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   >(
     { className, ...props }: FormInputProps<TFieldValues, TName>,
     ref: ForwardedRef<HTMLDivElement>
@@ -338,4 +334,4 @@ const CheckboxGroup = React.forwardRef(
 
 CheckboxGroup.displayName = CheckboxGroup.name;
 
-export { Form, FormInput, ToggleInput, CheckboxGroup };
+export { CheckboxGroup, Form, FormInput, ToggleInput };

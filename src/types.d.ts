@@ -1,6 +1,6 @@
 import type { Account, DefaultSession } from "next-auth";
 
-import { TOrganization, TRole } from "./lib/prisma";
+import type { TOrganization, TRole } from "./lib/prisma";
 
 declare module "next-auth" {
   export interface Session extends DefaultSession {

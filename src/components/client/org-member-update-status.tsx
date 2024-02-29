@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { updateRole } from "@/actions/org-user";
 import { useQueryClient } from "@tanstack/react-query";
-import { Row } from "@tanstack/react-table";
+import type { Row } from "@tanstack/react-table";
+import React, { useState } from "react";
 
-import { SelectOptions } from "@/types/nav";
-import { TOrganizationUsers } from "@/lib/prisma";
+import { updateRole } from "@/actions/org-user";
+import type { TOrganizationUsers } from "@/lib/prisma";
+import type { SelectOptions } from "@/types/nav";
 
-import { SelectInput } from "../ui/select";
-import { useServerSession } from "./context/session-ctx";
-import { usePage } from "./context/page-ctx";
 import Conditional from "../server/conditional";
 import { Popup } from "../ui/popover";
+import { SelectInput } from "../ui/select";
+import { usePage } from "./context/page-ctx";
+import { useServerSession } from "./context/session-ctx";
 
 interface OrgMemberUpdateStatusProps {
   row: Row<TOrganizationUsers>;

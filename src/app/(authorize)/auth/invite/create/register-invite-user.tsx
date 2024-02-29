@@ -1,17 +1,19 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React from "react";
+import type { SubmitHandler, Validate } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 import { setPassword, setPasswordSocial } from "@/actions/invite";
 import GoogleLogo from "@/assets/svgs/google-logo";
 import { Input } from "@/components/client/common/input";
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { TUser } from "@/lib/prisma";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { FormProvider, SubmitHandler, Validate, useForm } from "react-hook-form";
-import { toast } from "sonner";
+import type { TUser } from "@/lib/prisma";
 
 interface InviteSignUpSchema {
   password: string;
@@ -58,6 +60,8 @@ const RegisterInviteUser = ({ user }: RegisterInviteUserProps) => {
     if (val !== formVal.password) {
       return "Password does not match";
     }
+
+    return false;
   };
 
   // On server validations

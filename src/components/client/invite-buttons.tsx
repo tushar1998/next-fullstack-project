@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
-import { acceptInvitation, declineInvitation } from "@/actions/invite";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { toast } from "sonner";
 
-import { TInvite } from "@/lib/prisma";
+import { acceptInvitation, declineInvitation } from "@/actions/invite";
+import type { TInvite } from "@/lib/prisma";
 
 import { Button } from "../ui/button";
-import { toast } from "sonner";
 
 interface InvitationButtonsProps {
   invitation: TInvite;

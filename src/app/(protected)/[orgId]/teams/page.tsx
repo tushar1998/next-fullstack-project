@@ -1,21 +1,18 @@
+import { dehydrate, Hydrate } from "@tanstack/react-query";
+import { getServerSession } from "next-auth";
 import React from "react";
+
 import { findOrgUsers } from "@/actions/find-org-users";
 import { getInvites } from "@/actions/invite";
 import { find as findPermissions } from "@/actions/permissions";
 import { find } from "@/actions/roles";
-import { dehydrate, Hydrate } from "@tanstack/react-query";
-import { getServerSession } from "next-auth";
-
-import { PageProps } from "@/types/page";
-import { PERMISSIONS } from "@/lib/constants/permissions";
-import getQueryClient from "@/lib/getQueryClient";
-// import OrganizationMemberAdd from "@/components/client/org-member-add";
-// import OrganizationTeam from "@/components/client/org-team";
-// import OrganizationTeamBreadCrumb from "@/components/client/org-team-breadcrumb"
 import { PageProvider } from "@/components/client/context/page-ctx";
-import { nextAuthOptions } from "@/lib/next-auth";
 import OrganizationMemberAdd from "@/components/client/org-member-add";
 import OrganizationTeam from "@/components/client/org-team";
+import { PERMISSIONS } from "@/lib/constants/permissions";
+import getQueryClient from "@/lib/getQueryClient";
+import { nextAuthOptions } from "@/lib/next-auth";
+import type { PageProps } from "@/types/page";
 
 const hasAccess = (per: string, permissions: string[]) => {
   return !!permissions.includes(per);

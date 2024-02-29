@@ -1,4 +1,5 @@
-import { Children, forwardRef, PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+import { Children, forwardRef } from "react";
 
 interface ConditionalProps {
   satisfies?: null | unknown | boolean;
@@ -8,9 +9,7 @@ const Conditional = forwardRef(
   ({ children, satisfies }: PropsWithChildren<ConditionalProps>, _) => {
     const [truthy, falsy] = Children.toArray(children);
 
-    const elsy = falsy ?? <></>;
-
-    return satisfies ? truthy : elsy;
+    return satisfies ? truthy : falsy;
   }
 );
 

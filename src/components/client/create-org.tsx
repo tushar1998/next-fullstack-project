@@ -1,17 +1,19 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
-import { createOrg, CreateOrgParams } from "@/actions/create-org";
-import { findOrganization } from "@/actions/find-org";
 import { useMutation } from "@tanstack/react-query";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import React from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
+import type { CreateOrgParams } from "@/actions/create-org";
+import { createOrg } from "@/actions/create-org";
+import { findOrganization } from "@/actions/find-org";
 import { Button } from "@/components/ui/button";
 import { Form, FormInput } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
 
 interface OrgCreateFormSchema {
   name: string;
@@ -68,9 +70,8 @@ export default function CreateOrgForm({ userCreate }: CreateOrgFormProps) {
 
     if (!org) {
       return true;
-    } else {
-      return "Organization already exists";
     }
+    return "Organization already exists";
   };
 
   return (
@@ -83,7 +84,7 @@ export default function CreateOrgForm({ userCreate }: CreateOrgFormProps) {
           rules={{
             validate: { value: validateOrg },
             pattern: {
-              value: new RegExp(/^[a-z0-9]+(?:[-.][a-z0-9]+)*.[a-z]{2,6}$/g),
+              value: /^[a-z0-9]+(?:[-.][a-z0-9]+)*.[a-z]{2,6}$/g,
               message: "Domain friendly names allowed",
             },
           }}

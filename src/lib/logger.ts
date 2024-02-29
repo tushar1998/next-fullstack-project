@@ -1,25 +1,25 @@
-import { log } from "console";
 import chalk from "chalk";
+import { log } from "console";
 
 /**
  * !! Should use only on server side
  */
 export class Logger {
-  private _name: string;
+  private name: string;
 
   constructor(name: string) {
-    this._name = name;
+    this.name = name;
   }
 
   log(...message: unknown[]) {
-    log(chalk.green(`[${this._name}]:`, ...message));
+    log(chalk.green(`[${this.name}]:`, ...message));
   }
 
   info(...message: unknown[]) {
-    log(chalk.blue(`[${this._name}]:`, ...message));
+    log(chalk.blue(`[${this.name}]:`, ...message));
   }
 
   error(...message: unknown[]) {
-    log(chalk.red(`[${this._name}]:`, ...message));
+    log(chalk.red(`[${this.name}]:`, ...message));
   }
 }

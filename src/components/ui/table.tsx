@@ -1,13 +1,9 @@
+import type { RowData, TableOptions } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import {
-  RowData,
-  TableOptions,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+
 import { Skeleton } from "./skeleton";
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
@@ -96,14 +92,14 @@ const TableCaption = React.forwardRef<
 ));
 TableCaption.displayName = "TableCaption";
 
-export const ReactTableLoading = ({}) => {
+export const ReactTableLoading = () => {
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow className="p-2">
             <TableHead>
-              <Skeleton className="h-5 w-5" />
+              <Skeleton className="size-5" />
             </TableHead>
             <TableHead>
               <Skeleton className="h-4 w-[450px]" />
@@ -113,7 +109,7 @@ export const ReactTableLoading = ({}) => {
         <TableBody>
           <TableRow>
             <TableCell>
-              <Skeleton className="h-5 w-5" />
+              <Skeleton className="size-5" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-4 w-[450px]" />
@@ -182,13 +178,13 @@ const ReactTable = <TData extends RowData>({ data, columns, ...props }: ReactTab
 ReactTable.displayName = ReactTable.name;
 
 export {
+  ReactTable,
   Table,
-  TableHeader,
   TableBody,
+  TableCaption,
+  TableCell,
   TableFooter,
   TableHead,
+  TableHeader,
   TableRow,
-  TableCell,
-  TableCaption,
-  ReactTable,
 };

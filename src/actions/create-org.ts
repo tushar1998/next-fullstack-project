@@ -1,7 +1,10 @@
 "use server";
+
+import type { Session } from "next-auth";
+
 import { Logger } from "@/lib/logger";
-import { prisma, TOrganization, TOrganizationUsers } from "@/lib/prisma";
-import { Session } from "next-auth";
+import type { TOrganizationUsers } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 const logger = new Logger("Server Action: Create Org");
 

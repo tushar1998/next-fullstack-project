@@ -1,5 +1,6 @@
 import { Body, Font, Head, Html, Preview, Tailwind } from "@react-email/components";
-import React, { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+import React from "react";
 
 interface LayoutProps {
   preview?: string;
@@ -22,7 +23,10 @@ const Layout = ({ preview, className, children, ...restProps }: PropsWithChildre
       </Head>
       <Preview>{preview ?? ""}</Preview>
       <Tailwind>
-        <Body className={`bg-white border border-solid border-gray-300 rounded p-8 max-w-[576px] mx-auto ${className}`} {...restProps}>
+        <Body
+          className={`mx-auto max-w-[576px] rounded border border-solid border-gray-300 bg-white p-8 ${className}`}
+          {...restProps}
+        >
           {children}
         </Body>
       </Tailwind>

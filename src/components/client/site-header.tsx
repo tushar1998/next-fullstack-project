@@ -1,26 +1,25 @@
+import { Github, Hexagon } from "lucide-react";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 
-import { siteConfig } from "@/config/site";
-// import { Routes } from "@/lib/constants/routes";
-import { prisma } from "@/lib/prisma";
 import { buttonVariants } from "@/components/ui/button";
-import { nextAuthOptions } from "@/lib/next-auth";
-
-// import CommandK from "./client/command-k";
-// import NavItem from "./client/nav-item"
-import { ThemeToggle } from "./theme-toggle";
-import { Routes } from "@/lib/constants/routes";
-import { GitHubLogoIcon, ModulzLogoIcon } from "@radix-ui/react-icons";
-import { Github, Hexagon } from "lucide-react";
 // import SiteNavigation from "./client/site-navigation"
 // import UserAccountMenu from "./client/user-account-menu"
 import { Separator } from "@/components/ui/separator";
-import OrganizationSelect from "./org-select";
-import UserAccountMenu from "./user-account-menu";
-import SiteNavigation from "./site-navigation";
-import CommandK from "./command-k";
+import { siteConfig } from "@/config/site";
+import { Routes } from "@/lib/constants/routes";
+import { nextAuthOptions } from "@/lib/next-auth";
+// import { Routes } from "@/lib/constants/routes";
+import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
+
+import CommandK from "./command-k";
+import OrganizationSelect from "./org-select";
+import SiteNavigation from "./site-navigation";
+// import CommandK from "./client/command-k";
+// import NavItem from "./client/nav-item"
+import { ThemeToggle } from "./theme-toggle";
+import UserAccountMenu from "./user-account-menu";
 
 export default async function SiteHeader() {
   const session = await getServerSession(nextAuthOptions);
@@ -54,7 +53,7 @@ export default async function SiteHeader() {
       <div className="mx-auto flex h-12 w-full items-center justify-normal border-b px-2 sm:h-14 sm:justify-between md:px-8">
         <div className="flex items-center">
           <Link href="/" className="items-center space-x-2 sm:flex md:mr-2">
-            <Hexagon className="h-6 w-6" />
+            <Hexagon className="size-6" />
             <span className="hidden font-bold md:inline-block">{siteConfig.name}</span>
           </Link>
 
@@ -77,7 +76,7 @@ export default async function SiteHeader() {
                 "hidden sm:inline-flex"
               )}
             >
-              <Github className="h-5 w-5" />
+              <Github className="size-5" />
               <span className="sr-only">GitHub</span>
             </Link>
             <ThemeToggle className="hidden sm:inline-flex" />

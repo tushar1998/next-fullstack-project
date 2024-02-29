@@ -1,7 +1,7 @@
-"use server"
+"use server";
 
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/lib/prisma";
 
 export const findOrganization = async (name: string) => {
-  return prisma.organizations.findUnique({ where: { name } })
-}
+  return prisma.organizations.findUnique({ where: { name } });
+};

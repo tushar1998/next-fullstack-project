@@ -10,9 +10,11 @@
       "error",
       {
         "singleQuote": false,
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "printWidth": 100,
+        "trailingComma": "es5"
       }
-    ] // Avoid conflict rule between Prettier and Airbnb Eslint
+    ] // Avoid conflict rule between Prettier and Airbnb Eslint,
   },
   "overrides": [
     // Configuration for TypeScript files
@@ -39,7 +41,9 @@
           "error",
           {
             "singleQuote": false,
-            "endOfLine": "auto"
+            "endOfLine": "auto",
+            "printWidth": 100,
+            "trailingComma": "es5"
           }
         ], // Avoid conflict rule between Prettier and Airbnb Eslint
         "import/extensions": "off", // Avoid missing file extension errors, TypeScript already provides a similar feature
@@ -64,7 +68,8 @@
         "unused-imports/no-unused-vars": [
           "error",
           { "argsIgnorePattern": "^_" }
-        ]
+        ],
+        "no-param-reassign": ["error", { "props": false }]
       }
     },
     // Configuration for testing

@@ -1,18 +1,20 @@
 "use client";
 
-import React from "react";
-import { CreatePermission, createPermissions } from "@/actions/permissions";
-import { createRolePermission, type CreateRolePermission } from "@/actions/role-permissions";
-import { createRole } from "@/actions/roles";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import React from "react";
+import type { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
-import { TRole } from "@/lib/prisma";
+import type { CreatePermission } from "@/actions/permissions";
+import { createPermissions } from "@/actions/permissions";
+import { type CreateRolePermission, createRolePermission } from "@/actions/role-permissions";
+import { createRole } from "@/actions/roles";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckboxGroup, FormInput, ToggleInput } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import type { TRole } from "@/lib/prisma";
 // import { useToast } from "@/components/ui/use-toast"
 
 const RoleForm = () => {
@@ -40,16 +42,14 @@ const RoleForm = () => {
   const onSubmit: SubmitHandler<TRole> = (values: TRole) => {
     mutate(values);
   };
-  const onError: SubmitErrorHandler<TRole> = (error) => {
-    console.error(error);
-  };
+  const onError: SubmitErrorHandler<TRole> = () => {};
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>
         <h2 className="text-xl">Roles</h2>
         <FormInput name="name" label="Name" description="Non-spaced role name">
-          <Input placeholder="Enter name"></Input>
+          <Input placeholder="Enter name" />
         </FormInput>
         <FormInput name="display_name" label="Display Name">
           <Input placeholder="Enter Display name" />
@@ -119,7 +119,7 @@ const PermissionForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-6">
         <h2 className="text-xl">Permissions</h2>
         <FormInput name="name" label="Name">
-          <Input placeholder="Enter name"></Input>
+          <Input placeholder="Enter name" />
         </FormInput>
         <FormInput name="display_name" label="Display Name">
           <Input placeholder="Enter Display name" />
@@ -171,7 +171,7 @@ const RolePermission = () => {
       <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-6">
         <h2 className="text-xl">Role Permissions</h2>
         <FormInput name="role_id" label="Role">
-          <Input placeholder="Enter role"></Input>
+          <Input placeholder="Enter role" />
         </FormInput>
         <FormInput name="permission_id" label="Permission">
           <Input placeholder="Enter permissions" />

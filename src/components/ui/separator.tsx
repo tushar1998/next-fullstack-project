@@ -1,9 +1,10 @@
 "use client";
 
-import * as React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
+
 import Conditional from "../server/conditional";
 
 const Separator = React.forwardRef<
@@ -22,7 +23,9 @@ const Separator = React.forwardRef<
     {...props}
   >
     <Conditional satisfies={children}>
-      <span className="absolute left-[50%] top-0 text-sm text-muted-foreground leading-0 tracking-tighter">{children}</span>
+      <span className="absolute left-[50%] top-0 text-sm tracking-tighter text-muted-foreground">
+        {children}
+      </span>
     </Conditional>
   </SeparatorPrimitive.Root>
 ));

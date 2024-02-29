@@ -1,11 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { TRegister } from "@/lib/prisma";
 import { CheckCircle2 } from "lucide-react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import React from "react";
+
+import { Button } from "@/components/ui/button";
+import type { TRegister } from "@/lib/prisma";
 
 interface VerifyButtonProps {
   registration: TRegister;
@@ -15,7 +16,7 @@ function VerifyButton({ registration }: VerifyButtonProps) {
   const router = useRouter();
 
   const login = async () => {
-    const response = await signIn("credentials", {
+    await signIn("credentials", {
       email: registration?.email,
       password: registration?.password,
       hashed: true,

@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
+import React from "react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function DashboardErrorBoundary({
   error,
   reset,
 }: {
-  error: Error
-  reset: () => void
+  error: Error;
+  reset: () => void;
 }) {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div className="space-y-2 text-center">
@@ -24,5 +24,5 @@ export default function DashboardErrorBoundary({
         <Button onClick={reset}>Try Again</Button>
       </div>
     </div>
-  )
+  );
 }

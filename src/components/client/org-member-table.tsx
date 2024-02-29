@@ -1,24 +1,26 @@
+/* eslint-disable react/no-unstable-nested-components */
+
 "use client";
 
-import React, { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import type { ColumnDef } from "@tanstack/react-table";
+import { Crown } from "lucide-react";
 import { useParams } from "next/navigation";
+import React, { useMemo } from "react";
+
 import { findOrgUsers } from "@/actions/find-org-users";
 import { find } from "@/actions/roles";
-import { useQuery } from "@tanstack/react-query";
-import { ColumnDef } from "@tanstack/react-table";
-
-import { ROLES } from "@/lib/constants/roles";
-import { TOrganizationUsers, TRole } from "@/lib/prisma";
-import { getShortName } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ROLES } from "@/lib/constants/roles";
+import type { TOrganizationUsers, TRole } from "@/lib/prisma";
+import { getShortName } from "@/lib/utils";
 
+import Conditional from "../server/conditional";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ReactTable } from "../ui/table";
-import OrgMemberUpdateStatus from "./org-member-update-status";
-import Conditional from "../server/conditional";
-import { Crown } from "lucide-react";
 import { useServerSession } from "./context/session-ctx";
 import MemberActions from "./member-actions";
+import OrgMemberUpdateStatus from "./org-member-update-status";
 
 export default function OrganizationMemberTable() {
   const { orgId } = useParams();
@@ -38,11 +40,13 @@ export default function OrganizationMemberTable() {
       }, {});
 
       if (role) {
-        return role?.perform_action_on?.map((role) => ({
-          label: rolesByName[role]?.display_name,
-          value: rolesByName[role]?.id,
+        return role?.perform_action_on?.map((userRole) => ({
+          label: rolesByName[userRole]?.display_name,
+          value: rolesByName[userRole]?.id,
         }));
       }
+
+      return null;
     },
   });
 
@@ -89,7 +93,7 @@ export default function OrganizationMemberTable() {
                     {value} {isYou ? "(You)" : ""}
                   </span>
                   <Conditional satisfies={isOwner}>
-                    <Crown color="#ffc300" className="h-3 w-3" />
+                    <Crown color="#ffc300" className="size-3" />
                   </Conditional>
                 </div>
                 <span className="text-xs text-muted-foreground">{row.original.user!.email}</span>
@@ -112,7 +116,7 @@ export default function OrganizationMemberTable() {
             row?.original?.user_id === user?.id ||
             !role?.perform_action_on?.includes(row?.original?.role?.name ?? "")
           ) {
-            return <></>;
+            return null;
           }
 
           return <MemberActions {...row} />;
@@ -123,7 +127,7 @@ export default function OrganizationMemberTable() {
   );
 
   if (isLoading) {
-    return <></>;
+    return null;
   }
 
   // Help Banner for time user

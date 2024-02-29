@@ -1,7 +1,8 @@
 "use server";
 
 import { Logger } from "@/lib/logger";
-import { prisma, TInvite } from "@/lib/prisma";
+import type { TInvite } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { encodeString } from "@/lib/utils";
 
 export const getInvites = async (org_id: string) => {

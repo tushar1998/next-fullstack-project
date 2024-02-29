@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import React, { useRef, useState } from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useRef, useState } from "react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import OrgInviteTable from "./org-invite-table"
-import OrganizationMemberTable from "./org-member-table"
+import OrgInviteTable from "./org-invite-table";
+import OrganizationMemberTable from "./org-member-table";
 
 interface OrganizationTeamProps {
-  tab?: string
+  tab?: string;
 }
 
 export default function OrganizationTeam({ tab }: OrganizationTeamProps) {
-  const [currentTab, setTab] = useState(tab)
+  const [currentTab, setTab] = useState(tab);
 
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const params = useRef(new URLSearchParams(searchParams)).current
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const params = useRef(new URLSearchParams(searchParams)).current;
 
   return (
     <Tabs
       value={currentTab}
       className="mx-auto w-full overflow-auto"
       onValueChange={(value) => {
-        params.set("tab", value)
-        router.push(`${pathname}?${params.toString()}`)
-        setTab(value)
+        params.set("tab", value);
+        router.push(`${pathname}?${params.toString()}`);
+        setTab(value);
       }}
     >
       <TabsList className="grid w-full grid-cols-2">
@@ -41,5 +41,5 @@ export default function OrganizationTeam({ tab }: OrganizationTeamProps) {
         <OrgInviteTable />
       </TabsContent>
     </Tabs>
-  )
+  );
 }

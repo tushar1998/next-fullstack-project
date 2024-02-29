@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
 import { useDebouncedState, useEventListener, useWindowEvent } from "@mantine/hooks";
-
-import NavItem, { NavItemProps } from "../client/nav-item";
-import { Button } from "../ui/button";
-import { useServerSession } from "./context/session-ctx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useCallback, useEffect } from "react";
+
+import { Button } from "../ui/button";
+import type { NavItemProps } from "./nav-item";
+import NavItem from "./nav-item";
 
 interface SiteNavigationProps {
   navs: NavItemProps[];
@@ -27,7 +27,8 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
   );
 
   const checkScrollPosition = useCallback(() => {
-    //? Cyclic dependency
+    // ? Cyclic dependency
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const navBar = ref.current;
     const navClientWidth = navBar?.clientWidth;
 
@@ -38,7 +39,7 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
       // Update state to control button visibility
       setButtonsVisible({ isAtStart, isAtEnd });
     }
-    //? !refs, !setButtonsVisible - function
+    // ? !refs, !setButtonsVisible - function
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,7 +53,7 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
     if (activeNav) {
       navBar.scrollLeft = activeNav.offsetLeft - (navBar.offsetLeft + 10);
     }
-    //? !refs
+    // ? !refs
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -66,7 +67,7 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
       scrollToActiveButton();
       checkScrollPosition();
     }
-    //? !refs
+    // ? !refs
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkScrollPosition]);
 
@@ -78,7 +79,7 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
       navBar.scrollLeft += navClientWidth; // Scroll to the next "page"
       checkScrollPosition();
     }
-    //? !refs
+    // ? !refs
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkScrollPosition]);
 
@@ -90,7 +91,7 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
       navBar.scrollLeft -= navClientWidth; // Scroll to the previous "page"
       checkScrollPosition();
     }
-    //? !refs
+    // ? !refs
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkScrollPosition]);
 
@@ -102,7 +103,7 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
         data-state={buttonsVisible.isAtStart}
         onClick={scrollToPreviousPage}
       >
-        <ChevronLeft className="h-4 w-4 stroke-muted-foreground" />
+        <ChevronLeft className="size-4 stroke-muted-foreground" />
       </Button>
       <nav
         className="scrollbar-none flex items-center justify-between gap-1 overflow-scroll scroll-smooth px-2"
@@ -118,7 +119,7 @@ export default function SiteNavigation({ navs }: SiteNavigationProps) {
         onClick={scrollToNextPage}
         data-state={buttonsVisible.isAtEnd}
       >
-        <ChevronRight className="h-4 w-4 stroke-muted-foreground" />
+        <ChevronRight className="size-4 stroke-muted-foreground" />
       </Button>
     </div>
   );

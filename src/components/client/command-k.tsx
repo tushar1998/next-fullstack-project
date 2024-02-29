@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
 import { useDisclosure, useHotkeys } from "@mantine/hooks";
+import { Search } from "lucide-react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -14,7 +15,6 @@ import {
   CommandItem,
   CommandList,
 } from "../ui/command";
-import { Search } from "lucide-react";
 
 interface CommandKProps {
   className?: string;
@@ -27,7 +27,7 @@ export default function CommandK({ className }: CommandKProps) {
   return (
     <>
       <Button variant="ghost" size="icon" onClick={toggle} className="mr-1 sm:hidden">
-        <Search className="h-5 w-5" />
+        <Search className="size-5" />
       </Button>
       <Button
         variant="outline"
@@ -38,7 +38,7 @@ export default function CommandK({ className }: CommandKProps) {
         onClick={toggle}
       >
         <span className="flex items-center gap-2">
-          <Search className="h-4 w-4 stroke-muted-foreground" />
+          <Search className="size-4 stroke-muted-foreground" />
           <p>Search</p>
         </span>
         <kbd className="pointer-events-none inline-flex h-5 select-none gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
