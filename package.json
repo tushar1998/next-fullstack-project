@@ -12,11 +12,12 @@
     "lint": "next lint",
     "prepare": "husky",
     "prisma:generate": "prisma generate",
-    "start": "next start"
+    "start": "next start",
+    "commit": "git-cz"
   },
   "config": {
     "commitizen": {
-      "path": "@commitlint/cz-commitlint"
+      "path": "cz-conventional-changelog"
     }
   },
   "dependencies": {
@@ -71,12 +72,15 @@
   "devDependencies": {
     "@commitlint/cli": "^18.6.1",
     "@commitlint/config-conventional": "^18.6.2",
+    "@commitlint/cz-commitlint": "^19.0.3",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.5",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
