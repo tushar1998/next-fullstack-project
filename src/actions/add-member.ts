@@ -1,5 +1,6 @@
 "use server";
 
+import { env } from "@/lib/env.mjs";
 import { Logger } from "@/lib/logger";
 import type { TInvite } from "@/lib/prisma";
 import { prisma } from "@/lib/prisma";
@@ -26,7 +27,7 @@ export const addMember = async ({
 }: AddMemberParams): Promise<TInvite | undefined> => {
   const logger = new Logger(`ServerAction: ${addMember.name}`);
 
-  const expiryDays = parseInt(process.env.INVITE_EXPIRY_DAYS as string, 10);
+  const expiryDays = parseInt(env.INVITE_EXPIRY_DAYS, 10);
 
   const date = new Date();
   date.setDate(date.getDate() + expiryDays);

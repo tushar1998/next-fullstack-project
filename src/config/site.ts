@@ -1,3 +1,5 @@
+import { env } from "@/lib/env.mjs";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -16,7 +18,7 @@ export const siteConfig = {
     config: {
       timeout: 2000,
     },
-    baseUrl: process.env.API_BASE_URL,
+    baseUrl: env.API_BASE_URL,
     greeting: `/api`,
   },
   links: {

@@ -1,5 +1,6 @@
 "use server";
 
+import { env } from "@/lib/env.mjs";
 import { Logger } from "@/lib/logger";
 import type { TInvite } from "@/lib/prisma";
 import { prisma } from "@/lib/prisma";
@@ -95,7 +96,7 @@ export const declineInvitation = async (id: string) => {
 export const resendInvite = async (invite_id: string) => {
   const logger = new Logger(`[ServerAction: Resend Invitation]:`);
 
-  const expiryDays = parseInt(process.env.INVITE_EXPIRY_DAYS as string, 10);
+  const expiryDays = parseInt(env.INVITE_EXPIRY_DAYS as string, 10);
 
   const date = new Date();
   date.setDate(date.getDate() + expiryDays);

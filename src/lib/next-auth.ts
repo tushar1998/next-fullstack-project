@@ -6,6 +6,8 @@ import GoogleProvider from "next-auth/providers/google";
 import { Logger } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 
+import { env } from "./env.mjs";
+
 const logger = new Logger("NextAuth");
 
 export const nextAuthOptions: NextAuthOptions = {
@@ -66,8 +68,8 @@ export const nextAuthOptions: NextAuthOptions = {
       name: "Credentials",
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_OAUTH_CLIENT as string,
-      clientSecret: process.env.GOOGLE_OAUTH_SECRET as string,
+      clientId: env.GOOGLE_OAUTH_CLIENT as string,
+      clientSecret: env.GOOGLE_OAUTH_SECRET as string,
       authorization: {
         params: {
           scope: "email profile openid",

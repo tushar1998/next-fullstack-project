@@ -2,6 +2,8 @@ import { genSaltSync, hashSync } from "bcryptjs";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { env } from "./env.mjs";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -18,7 +20,7 @@ export const encodeString = (text: string) => {
 };
 
 export const makeEmailUrl = (href?: string) => {
-  const appUrl = process.env.NEXT_APP_URL;
+  const appUrl = env.NEXT_APP_URL;
 
   if (!appUrl) {
     return href;
