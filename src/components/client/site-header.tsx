@@ -44,7 +44,7 @@ export default async function SiteHeader() {
   const navs = siteConfig.mainNav.map(({ href, ...rest }) => {
     return {
       ...rest,
-      href: `${Routes.DASHBOARD}/${session?.org?.name}`.concat(href),
+      href: `${Routes.ORGANIZATION}/${session?.org?.name}`.concat(href),
     };
   });
 

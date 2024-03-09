@@ -21,7 +21,7 @@ export default async function SignIn({ searchParams }: Readonly<PageProps>) {
   if (session) {
     logger.log("server session.user.id found redirecting to dashboard");
 
-    redirect("/dashboard");
+    redirect("/");
   }
 
   return (
