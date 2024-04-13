@@ -42,9 +42,10 @@ model organizations {
   deleted      Boolean   @default(false)
   deleted_at   DateTime? @db.Timestamp
 
-  user     users      @relation(fields: [user_id], references: [id])
-  OrgUsers orgUsers[]
-  invites  invites[]
+  user         users          @relation(fields: [user_id], references: [id])
+  OrgUsers     orgUsers[]
+  invites      invites[]
+  subscription subscription[]
 
   @@unique([name, deleted_at])
   @@map("organizations")
@@ -155,4 +156,22 @@ model register {
 
   @@unique([email, deleted_at])
   @@map("register")
+}
+
+model subscription {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  org_id          String    @unique @db.ObjectId
+  subscription_id String?   @unique
+  customer_id     String?   @unique
+  price_id        String?
+  period_end      DateTime?
+
+  created_at DateTime  @default(now()) @db.Timestamp
+  updated_at DateTime  @default(now()) @db.Timestamp
+  deleted    Boolean   @default(false)
+  deleted_at DateTime? @db.Timestamp
+
+  org organizations @relation(fields: [org_id], references: [id])
+
+  @@unique([org_id, subscription_id, deleted_at])
 }

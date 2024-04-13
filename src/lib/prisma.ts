@@ -7,6 +7,7 @@ import type {
   register,
   rolePermissions,
   roles,
+  subscription,
   users,
 } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
@@ -98,6 +99,7 @@ interface TRole extends roles {}
 interface TUser extends users {}
 type TInvite = invites & { user?: users; org?: organizations };
 type TRegister = register;
+type TSubsctiption = subscription;
 
 export type {
   TInvite,
@@ -106,5 +108,6 @@ export type {
   TRegister,
   TRole,
   TRolePermissions,
+  TSubsctiption,
   TUser,
 };

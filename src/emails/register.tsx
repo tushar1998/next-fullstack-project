@@ -1,7 +1,7 @@
 import { Button, Section, Text } from "@react-email/components";
 import * as React from "react";
 
-import { makeEmailUrl } from "@/lib/utils";
+import { getAbsoluteUrl } from "@/lib/utils";
 
 import Footer from "./components/footer";
 import Header from "./components/header";
@@ -14,7 +14,7 @@ interface RegisterEmailProps {
 }
 
 export default function Register({ email, name, href }: RegisterEmailProps) {
-  const url = makeEmailUrl(href);
+  const url = getAbsoluteUrl(href);
 
   return (
     <Layout>

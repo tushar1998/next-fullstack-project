@@ -19,16 +19,8 @@ export const encodeString = (text: string) => {
   return { hashedPassword, salt };
 };
 
-export const makeEmailUrl = (href?: string) => {
-  const appUrl = env.NEXT_APP_URL;
+export const getAbsoluteUrl = (href?: string) => {
+  const appUrl = env.NEXT_PUBLIC_APP_URL;
 
-  if (!appUrl) {
-    return href;
-  }
-
-  if (!href) {
-    return "";
-  }
-
-  return appUrl.concat(href);
+  return appUrl.concat(href ?? "");
 };

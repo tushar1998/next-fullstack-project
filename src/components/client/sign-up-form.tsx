@@ -23,7 +23,7 @@ interface SignUpFormSchema {
 function SignUpForm() {
   const methods = useForm<SignUpFormSchema>({
     defaultValues: { email: "", password: "", confirm_password: "" },
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const router = useRouter();
@@ -59,7 +59,7 @@ function SignUpForm() {
       return "Password does not match";
     }
 
-    return false;
+    return true;
   };
 
   const validateEmail: Validate<string, SignUpFormSchema> = async (val) => {
@@ -69,7 +69,7 @@ function SignUpForm() {
       return "User already exists!";
     }
 
-    return false;
+    return true;
   };
 
   return (

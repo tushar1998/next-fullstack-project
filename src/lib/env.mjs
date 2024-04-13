@@ -16,24 +16,34 @@ export const env = createEnv({
       .refine((value) => value.includes(":")),
     RESEND_API_KEY: z.string().min(1),
     RESEND_FROM_EMAIL: z.string().min(1),
-    NEXT_APP_URL: z.string().url().min(1),
+    STRIPE_API_KEY: z.string().min(1),
+    STRIPE_PREMIUM_MONTHLY_PRICE_ID: z.string().min(1),
+    STRIPE_WEBHOOK_SECRET: z.string().min(1),
   },
 
   /**
    * The prefix that client-side variables must have. This is enforced both at
    * a type-level and at runtime.
    */
-  // clientPrefix: "",
+  clientPrefix: "NEXT_PUBLIC_",
 
-  // client: {
-  //   API_BASE_URL: z.string().url().min(1),
-  // },
+  client: {
+    NEXT_PUBLIC_APP_URL: z.string().url().min(1),
+    NEXT_PUBLIC_STRIPE_API_KEY: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_PREMIUM_MONTHLY_PRICE_ID: z.string().min(1),
+  },
 
   /**
    * What object holds the environment variables at runtime. This is usually
    * `process.env` or `import.meta.env`.
    */
-  runtimeEnv: process.env,
+  runtimeEnv: {
+    ...process.env,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_STRIPE_API_KEY: process.env.NEXT_PUBLIC_STRIPE_API_KEY,
+    NEXT_PUBLIC_STRIPE_PREMIUM_MONTHLY_PRICE_ID:
+      process.env.NEXT_PUBLIC_STRIPE_PREMIUM_MONTHLY_PRICE_ID,
+  },
 
   /**
    * By default, this library will feed the environment variables directly to

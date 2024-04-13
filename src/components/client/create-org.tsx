@@ -38,7 +38,7 @@ export default function CreateOrgForm({ userCreate }: CreateOrgFormProps) {
     mutationFn: (variables: CreateOrgParams) => createOrg(variables),
     onSuccess: async (data) => {
       await update({ org: data?.org, role: data?.role });
-      push("/dashboard");
+      push("/");
     },
   });
 

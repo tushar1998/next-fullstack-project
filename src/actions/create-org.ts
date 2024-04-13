@@ -45,12 +45,26 @@ export const createOrg = async ({
           },
           include: { org: true, role: true },
         });
+
+        // Create free subscription
+        await tx.subscription.create({
+          data: {
+            org_id: organization?.id,
+            subscription_id: null,
+            customer_id: null,
+            price_id: null,
+            period_end: null,
+          },
+        });
       }
     });
 
     return organizationUser;
   } catch (error) {
-    logger.error("error creating organization", JSON.stringify(error, null, 2));
+    logger.error(
+      "error creating organization, organization-users, subscription",
+      JSON.stringify(error, null, 2)
+    );
 
     throw error;
   }

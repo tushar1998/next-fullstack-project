@@ -6,8 +6,8 @@ import { siteConfig } from "@/config/site";
 import type { PageProps } from "@/types/page";
 
 const Register = ({ searchParams }: PageProps) => {
-  //! What if the unknown user comes from direct link - Implement Error cases
-
+  //! 1. What if the unknown user comes from direct link - Implement Error cases
+  // ? 2. Add login button -> use case where he is opening email link in another browser/tab
   return (
     <div className="flex items-start gap-4">
       <Send className="mt-2" />
@@ -18,6 +18,8 @@ const Register = ({ searchParams }: PageProps) => {
           your email address {searchParams?.email}
         </h2>
       </Conditional>
+
+      {/* 2. -> Button to take user to login page */}
     </div>
   );
 };
