@@ -1,0 +1,24 @@
+services:
+  devcontainer: 
+    build:
+      context: .
+      dockerfile: DockerFile
+    volumes:
+      - ../..:/workspaces:cached 
+    command: sleep infinity
+    network_mode: service:db
+  db:
+    image: mongo:7.0.8
+    restart: unless-stopped
+    volumes:
+      - mongodb-data:/data/db
+    command: [--replSet, my-replica-set, --bind_ip_all, --port, "27017"]
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: test $$(mongosh --port 27017 --quiet --eval "try {rs.initiate({_id:'my-replica-set',members:[{_id:0,host:\"db:27017\"}]})} catch(e) {rs.status().ok}") -eq 1
+      interval: 10s
+      start_period: 30s
+    
+volumes:
+  mongodb-data:
