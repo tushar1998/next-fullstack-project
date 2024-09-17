@@ -3,12 +3,11 @@
 import { render } from "@react-email/render";
 import { v4 as uuidv4 } from "uuid";
 
+import Register from "@/emails/register";
 import { sendEmail } from "@/lib/email";
 import { Logger } from "@/lib/logger";
 import { prisma } from "@/lib/prisma";
 import { encodeString } from "@/lib/utils";
-
-import Register from "../emails/register";
 
 export const registerUser = async ({ email, password }: Record<"email" | "password", string>) => {
   const logger = new Logger("Register New User");
@@ -33,7 +32,7 @@ export const registerUser = async ({ email, password }: Record<"email" | "passwo
     await sendEmail({
       to: email,
       subject: "Register to Untitled UI",
-      html: render(
+      html: await render(
         Register({
           email,
           href: `/auth/verify?registration=${response?.id}`,

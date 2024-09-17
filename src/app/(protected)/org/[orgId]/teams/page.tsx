@@ -1,4 +1,4 @@
-import { dehydrate, Hydrate } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getServerSession } from "next-auth";
 import React from "react";
 
@@ -25,14 +25,20 @@ export default async function OrganizationMembers({ params, searchParams }: Page
   const currentTab = searchParams?.tab ?? "members";
 
   if (currentTab === "members") {
-    await queryClient.prefetchQuery(["organization-users"], () => findOrgUsers(params?.orgId));
+    await queryClient.prefetchQuery({
+      queryKey: ["organization-users"],
+      queryFn: () => findOrgUsers(params?.orgId),
+    });
   }
 
   if (currentTab === "invites" && session?.org.id) {
-    await queryClient.prefetchQuery(["invite-users"], () => getInvites(session?.org.id as string));
+    await queryClient.prefetchQuery({
+      queryKey: ["invite-users"],
+      queryFn: () => getInvites(session?.org.id as string),
+    });
   }
 
-  await queryClient.prefetchQuery(["roles"], () => find());
+  await queryClient.prefetchQuery({ queryKey: ["roles"], queryFn: () => find() });
   const dehydratedState = dehydrate(queryClient);
 
   const permissions = await findPermissions(session?.role?.id as string, ["invites", "members"]);
@@ -49,14 +55,14 @@ export default async function OrganizationMembers({ params, searchParams }: Page
   return (
     <section className="mx-auto grid w-full max-w-screen-lg items-center gap-4 p-4 sm:px-8">
       <PageProvider permissions={teamRolePermissions}>
-        <Hydrate state={dehydratedState}>
+        <HydrationBoundary state={dehydratedState}>
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold">Teams</h2>
 
             <OrganizationMemberAdd />
           </div>
           <OrganizationTeam tab={currentTab} />
-        </Hydrate>
+        </HydrationBoundary>
       </PageProvider>
     </section>
   );

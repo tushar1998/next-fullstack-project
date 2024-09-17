@@ -24,7 +24,7 @@ export default function UserAccountMenu() {
 
   const { role, user } = useServerSession();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => signOut(),
     onSuccess: () => {
       toast.success("Logged out successfully");
@@ -73,7 +73,7 @@ export default function UserAccountMenu() {
           id: "logout",
           menuTitle: (
             <>
-              <Conditional satisfies={isLoading}>
+              <Conditional satisfies={isPending}>
                 <Loader2 className="mr-2 mt-0.5 size-4 animate-spin" />
                 <LogOut className="mr-2 mt-0.5 size-4" />
               </Conditional>

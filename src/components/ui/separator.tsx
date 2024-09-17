@@ -23,7 +23,7 @@ const Separator = React.forwardRef<
     {...props}
   >
     <Conditional satisfies={children}>
-      <span className="absolute left-[50%] top-0 text-sm tracking-tighter text-muted-foreground">
+      <span className="absolute left-1/2 top-0 text-sm tracking-tighter text-muted-foreground">
         {children}
       </span>
     </Conditional>

@@ -26,11 +26,14 @@ export default function OrganizationMemberTable() {
   const { orgId } = useParams();
   const { user, role } = useServerSession();
 
-  const { data, isLoading } = useQuery<TOrganizationUsers[]>(["organization-users"], () =>
-    findOrgUsers(orgId as string)
-  );
+  const { data, isLoading } = useQuery<TOrganizationUsers[]>({
+    queryKey: ["organization-users"],
+    queryFn: () => findOrgUsers(orgId as string),
+  });
 
-  const { data: roles } = useQuery(["roles"], () => find(), {
+  const { data: roles } = useQuery({
+    queryKey: ["roles"],
+    queryFn: find,
     enabled: !!role,
     select: (selectRoles) => {
       const rolesByName = selectRoles.reduce((prev: Record<string, TRole>, next) => {

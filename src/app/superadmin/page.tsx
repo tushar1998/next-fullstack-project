@@ -1,4 +1,4 @@
-import { dehydrate, Hydrate } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import React from "react";
 
 import { findPermissions } from "@/actions/permissions";
@@ -10,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Separator } from "@/components/ui/separator";
 import getQueryClient from "@/lib/getQueryClient";
 
 import PermissionsSuperAdmin from "./permissions";
@@ -26,17 +27,20 @@ export default async function SuperAdmin() {
 
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(["roles"], () => find());
-  await queryClient.prefetchQuery(["permissions"], () => findPermissions());
-  await queryClient.prefetchQuery(["role-permissions"], () => findRolePermissions());
+  await queryClient.prefetchQuery({ queryKey: ["roles"], queryFn: () => find() });
+  await queryClient.prefetchQuery({ queryKey: ["permissions"], queryFn: () => findPermissions() });
+  await queryClient.prefetchQuery({
+    queryKey: ["role-permissions"],
+    queryFn: () => findRolePermissions(),
+  });
 
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <Hydrate state={dehydratedState}>
-      <div className="hidden justify-between lg:flex">
+    <HydrationBoundary state={dehydratedState}>
+      <div className="hidden h-full justify-between lg:flex">
         <RolePermissionForms />
-        <div className="border" />
+        <Separator orientation="vertical" className="" />
 
         <Accordion type="multiple" className="mx-auto w-full max-w-xl p-4">
           <AccordionItem value="item-1">
@@ -61,6 +65,6 @@ export default async function SuperAdmin() {
       </div>
       <div className="lg:hidden">Screen not supported on Mobile devices</div>
       {/* <h1 className="text-3xl">Role Permissions</h1> */}
-    </Hydrate>
+    </HydrationBoundary>
   );
 }

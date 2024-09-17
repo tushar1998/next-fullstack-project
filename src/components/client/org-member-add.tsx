@@ -37,10 +37,12 @@ export default function OrganizationMemberAdd() {
 
   const [opened, { close, toggle }] = useDisclosure(false);
 
-  const { data: roles, isLoading: rolesLoading } = useQuery(["roles"], () => find(), {
+  const { data: roles, isPending: rolesLoading } = useQuery({
+    queryKey: ["roles"],
+    queryFn: find,
     enabled: !!role,
-    select: (selectRoles) => {
-      const rolesByName = selectRoles.reduce((prev: Record<string, TRole>, next) => {
+    select: (apiRoles) => {
+      const rolesByName = apiRoles.reduce((prev: Record<string, TRole>, next) => {
         prev[next.name] = { ...next };
 
         return prev;
@@ -53,7 +55,7 @@ export default function OrganizationMemberAdd() {
         }));
       }
 
-      return undefined;
+      return [];
     },
   });
 
@@ -65,7 +67,7 @@ export default function OrganizationMemberAdd() {
   });
   const { handleSubmit, reset } = methods;
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (variables: AddMemberParams) => addMember(variables),
     onSuccess: () => {
       close();
@@ -177,10 +179,10 @@ export default function OrganizationMemberAdd() {
           </Form>
 
           <Modal.Footer>
-            <Button variant="outline" onClick={close} loading={isLoading}>
+            <Button variant="outline" onClick={close} loading={isPending}>
               Cancel
             </Button>
-            <Button type="submit" form="add-member" loading={isLoading}>
+            <Button type="submit" form="add-member" loading={isPending}>
               Send Invite
             </Button>
           </Modal.Footer>

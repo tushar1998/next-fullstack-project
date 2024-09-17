@@ -34,7 +34,7 @@ export default function InviteActions({ original }: InviteActionsProps) {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries(["invite-users"]);
+      queryClient.invalidateQueries({ queryKey: ["invite-users"] });
     },
   });
 
@@ -49,7 +49,7 @@ export default function InviteActions({ original }: InviteActionsProps) {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries(["invite-users"]);
+      queryClient.invalidateQueries({ queryKey: ["invite-users"] });
     },
 
     onSettled: () => {},

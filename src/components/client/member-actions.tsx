@@ -26,13 +26,13 @@ function MemberActions({ original }: MemberActionsProps) {
 
   const { invalidateQueries } = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (variables: string) => removeUser(variables),
     onSuccess: () => {
       toast.success("Member removed successfully");
     },
     onSettled() {
-      invalidateQueries(["organization-users"]);
+      invalidateQueries({ queryKey: ["organization-users"] });
       close();
     },
   });
@@ -45,7 +45,7 @@ function MemberActions({ original }: MemberActionsProps) {
             variant="ghost"
             size="icon"
             className="size-8 p-0"
-            loading={isLoading}
+            loading={isPending}
             onClick={toggle}
           >
             <span className="sr-only">Remove Member</span>
@@ -58,7 +58,7 @@ function MemberActions({ original }: MemberActionsProps) {
             This action cannot be undone. This will remove the user from the current organization
           </span>
           <Modal.Footer>
-            <Button loading={isLoading} onClick={() => mutate(original?.id)}>
+            <Button loading={isPending} onClick={() => mutate(original?.id)}>
               Remove
             </Button>
           </Modal.Footer>

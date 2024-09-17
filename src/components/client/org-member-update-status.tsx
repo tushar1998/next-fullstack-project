@@ -34,7 +34,7 @@ export default function OrgMemberUpdateStatus({ row, roles }: OrgMemberUpdateSta
       updateRole(roleValue, row?.original?.id);
     }
 
-    queryClient.invalidateQueries(["organization-users"]);
+    queryClient.invalidateQueries({ queryKey: ["organization-users"] });
   };
 
   const nonUpdateCondition =

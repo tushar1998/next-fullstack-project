@@ -6,7 +6,7 @@ import React from "react";
 import { find } from "@/actions/roles";
 
 export default function RolesSuperAdmin() {
-  const { data: roles } = useQuery(["roles"], () => find());
+  const { data: roles } = useQuery({ queryKey: ["roles"], queryFn: () => find() });
   return (
     <div>
       <h1 className="mb-2 text-3xl">Roles</h1>

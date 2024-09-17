@@ -36,14 +36,14 @@ const RegisterInviteUser = ({ user }: RegisterInviteUserProps) => {
     mode: "onBlur",
   });
 
-  const { mutate: mutateSetPassword, isLoading } = useMutation({
+  const { mutate: mutateSetPassword, isPending } = useMutation({
     mutationFn: ({ password, id }: MutationVars) => setPassword(id, password),
     onSuccess: () => toast.success("Registeration Success!"),
     onError: () => toast.error("Registeration Failed!"),
     onSettled: () => router.push("/"),
   });
 
-  const { mutate: mutateSetGoogle, isLoading: isLoadingGoogle } = useMutation({
+  const { mutate: mutateSetGoogle, isPending: isLoadingGoogle } = useMutation({
     mutationFn: (id: string) => setPasswordSocial(id),
     onSuccess: () => toast.success("Registeration Success!"),
     onError: () => toast.error("Registeration Failed!"),
@@ -91,7 +91,7 @@ const RegisterInviteUser = ({ user }: RegisterInviteUserProps) => {
           <Input withShowPassword placeholder="Confirm password" type="password" />
         </FormInput>
 
-        <Button type="submit" className="w-full" loading={isLoading}>
+        <Button type="submit" className="w-full" loading={isPending}>
           Set Password
         </Button>
 

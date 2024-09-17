@@ -7,7 +7,10 @@ import React from "react";
 import { findRolePermissions } from "@/actions/role-permissions";
 
 export default function RolePermissionSuperAdmin() {
-  const { data } = useQuery(["role-permissions"], () => findRolePermissions());
+  const { data } = useQuery({
+    queryKey: ["role-permissions"],
+    queryFn: () => findRolePermissions(),
+  });
 
   const rolePermissions = sortBy(data, (value) => {
     return value.role.display_name;

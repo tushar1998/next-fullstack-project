@@ -4,11 +4,13 @@ import { Logger } from "@/lib/logger";
 import type { TRole } from "@/lib/prisma";
 import { prisma } from "@/lib/prisma";
 
-export const find = async (): Promise<TRole[]> => {
+export const find = async (): Promise<Array<TRole>> => {
   const logger = new Logger(`[ServerActions]:[Invites find]: `);
 
   try {
-    return await prisma.roles.findMany();
+    const response = await prisma.roles.findMany();
+
+    return response;
   } catch (error) {
     logger.error("Error fetching roles", JSON.stringify(error, null, 2));
 

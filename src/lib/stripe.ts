@@ -6,7 +6,7 @@ import { env } from "./env.mjs";
 
 export const stripe = new Stripe(env.NEXT_PUBLIC_STRIPE_API_KEY, {
   typescript: true,
-  apiVersion: "2023-10-16",
+  apiVersion: "2024-06-20",
 });
 
 export const freePlan: SubscriptionPlan = {

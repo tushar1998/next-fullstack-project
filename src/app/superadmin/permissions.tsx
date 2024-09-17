@@ -7,7 +7,10 @@ import React from "react";
 import { findPermissions } from "@/actions/permissions";
 
 export default function PermissionsSuperAdmin() {
-  const { data: permissions } = useQuery(["permissions"], () => findPermissions());
+  const { data: permissions } = useQuery({
+    queryKey: ["permissions"],
+    queryFn: () => findPermissions(),
+  });
 
   const pers = sortBy(permissions, (value) => {
     return value.scope;

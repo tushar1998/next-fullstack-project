@@ -20,7 +20,10 @@ import InviteActions from "./invite-actions";
 export default function OrgInviteTable() {
   const { org } = useServerSession();
 
-  const { data, isLoading } = useQuery(["invite-users"], () => getInvites(org?.id as string));
+  const { data, isLoading } = useQuery({
+    queryKey: ["invite-users"],
+    queryFn: () => getInvites(org?.id as string),
+  });
 
   const columns = useMemo(
     (): ColumnDef<TInvite, string>[] => [

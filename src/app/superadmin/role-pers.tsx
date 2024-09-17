@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { CheckboxGroup, FormInput, ToggleInput } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import type { TRole } from "@/lib/prisma";
 // import { useToast } from "@/components/ui/use-toast"
 
@@ -26,12 +27,12 @@ const RoleForm = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (variables: TRole) => createRole(variables),
 
     onSuccess: () => {
       // toast({ variant: "success", title: "Role created" })
-      queryClient.invalidateQueries(["roles"]);
+      queryClient.invalidateQueries({ queryKey: ["roles"] });
     },
 
     // onError: () => toast({ variant: "error", title: "Role creation failed" }),
@@ -46,7 +47,7 @@ const RoleForm = () => {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+      <form onSubmit={form.handleSubmit(onSubmit, onError)} className="w-3/4 space-y-4 px-2">
         <h2 className="text-xl">Roles</h2>
         <FormInput name="name" label="Name" description="Non-spaced role name">
           <Input placeholder="Enter name" />
@@ -74,7 +75,7 @@ const RoleForm = () => {
           ]}
         />
 
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={isPending}>
           Submit
         </Button>
       </form>
@@ -95,12 +96,12 @@ const PermissionForm = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (variables: CreatePermission) => createPermissions(variables),
 
     onSuccess: () => {
       // toast({ variant: "success", title: "Permission created" })
-      queryClient.invalidateQueries(["permissions"]);
+      queryClient.invalidateQueries({ queryKey: ["permissions"] });
     },
 
     onError: () => {},
@@ -116,7 +117,7 @@ const PermissionForm = () => {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit, onError)} className="w-3/4 space-y-4 px-2">
         <h2 className="text-xl">Permissions</h2>
         <FormInput name="name" label="Name">
           <Input placeholder="Enter name" />
@@ -128,7 +129,7 @@ const PermissionForm = () => {
           <Input placeholder="Enter Scope" />
         </FormInput>
 
-        <Button type="submit" disabled={isLoading} loading={isLoading}>
+        <Button type="submit" disabled={isPending} loading={isPending}>
           Submit
         </Button>
       </form>
@@ -147,12 +148,12 @@ const RolePermission = () => {
   // const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (variables: CreateRolePermission) => createRolePermission(variables),
 
     onSuccess: () => {
       // toast({ variant: "success", title: "Role Permission created" });
-      queryClient.invalidateQueries(["role-permissions"]);
+      queryClient.invalidateQueries({ queryKey: ["role-permissions"] });
     },
 
     // onError: () => toast({ variant: "error", title: "Role Permission creation failed" }),
@@ -168,7 +169,7 @@ const RolePermission = () => {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit, onError)} className="w-3/4 space-y-4 px-2">
         <h2 className="text-xl">Role Permissions</h2>
         <FormInput name="role_id" label="Role">
           <Input placeholder="Enter role" />
@@ -177,7 +178,7 @@ const RolePermission = () => {
           <Input placeholder="Enter permissions" />
         </FormInput>
 
-        <Button type="submit" disabled={isLoading} loading={isLoading}>
+        <Button type="submit" disabled={isPending} loading={isPending}>
           Submit
         </Button>
       </form>
@@ -187,10 +188,14 @@ const RolePermission = () => {
 
 export default function RolePermissionForms() {
   return (
-    <ScrollArea className="h-[750px] p-4">
-      <RolePermission />
-      <PermissionForm />
-      <RoleForm />
+    <ScrollArea className="h-[750px] w-full max-w-lg p-4">
+      <div className="space-y-4">
+        <RolePermission />
+        <Separator />
+        <PermissionForm />
+        <Separator />
+        <RoleForm />
+      </div>
     </ScrollArea>
   );
 }

@@ -17,7 +17,7 @@ interface InvitationButtonsProps {
 export default function InvitationButtons({ invitation }: InvitationButtonsProps) {
   const router = useRouter();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (data: TInvite) => acceptInvitation(data),
     onSuccess: (data) => {
       toast.success("Invitation accepted!");
@@ -32,7 +32,7 @@ export default function InvitationButtons({ invitation }: InvitationButtonsProps
     },
   });
 
-  const { mutate: mutateDecline, isLoading: isLoadingDecline } = useMutation({
+  const { mutate: mutateDecline, isPending: isLoadingDecline } = useMutation({
     mutationFn: (id: string) => declineInvitation(id),
     onSuccess: () => {
       toast.success("Invitation declined!");
@@ -45,7 +45,7 @@ export default function InvitationButtons({ invitation }: InvitationButtonsProps
 
   return (
     <>
-      <Button className="w-full" loading={isLoading} onClick={() => mutate(invitation)}>
+      <Button className="w-full" loading={isPending} onClick={() => mutate(invitation)}>
         Accept Invitation
       </Button>
       <Button

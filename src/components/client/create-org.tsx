@@ -34,7 +34,7 @@ export default function CreateOrgForm({ userCreate }: CreateOrgFormProps) {
 
   const { push } = useRouter();
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (variables: CreateOrgParams) => createOrg(variables),
     onSuccess: async (data) => {
       await update({ org: data?.org, role: data?.role });
@@ -102,7 +102,7 @@ export default function CreateOrgForm({ userCreate }: CreateOrgFormProps) {
         >
           <Input type="text" placeholder="Enter Display name" />
         </FormInput>
-        <Button type="submit" className="mt-4 w-full" loading={isLoading}>
+        <Button type="submit" className="mt-4 w-full" loading={isPending}>
           Submit
         </Button>
       </form>
