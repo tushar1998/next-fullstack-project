@@ -19,8 +19,8 @@ const Form = FormProvider;
 interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> extends UseControllerProps<TFieldValues, TName>,
-    PropsWithChildren {
+>
+  extends UseControllerProps<TFieldValues, TName>, PropsWithChildren {
   label: ReactNode;
   description?: ReactNode;
   message?: boolean;
